@@ -1,0 +1,30 @@
+*{
+    background-color: black;
+    color: white;
+}
+/** NAVIGATION **/
+#myTab{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3vh;
+    color: wheat;
+}
+
+/** HERO **/
+#kanaka {
+    text-align: center;
+    margin-top: 3vh;
+}
+
+/** SEARCH **/
+.searchContainer{
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2vh;
+}
+#searchBar{
+    background-color: white;
+}
+#searchBtn{
+    margin-top: 2vh;
+}
