@@ -24,8 +24,22 @@
 }
 #searchBar{
     background-color: white;
-    width: 25vw;
+    border-radius: 5px;
+    width: 15rem;
 }
 #searchBtn{
     margin-top: 2vh;
+}
+
+/* *TABLE**/
+
+.table-dark td {
+    background-color: black;
+}
+.table-dark th{
+    background-color: black;
+}
+.table-dark th{
+    background-color: white;
+    color: black;
 }
