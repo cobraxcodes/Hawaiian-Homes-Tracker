@@ -24,6 +24,7 @@
 }
 #searchBar{
     background-color: white;
+    width: 25vw;
 }
 #searchBtn{
     margin-top: 2vh;
