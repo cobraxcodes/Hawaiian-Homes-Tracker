@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/cobraxcodes/Hawaiian-Homes-Tracker/issues"
   },
-  "homepage": "https://github.com/cobraxcodes/Hawaiian-Homes-Tracker#readme"
+  "homepage": "https://github.com/cobraxcodes/Hawaiian-Homes-Tracker#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.6"
+  }
 }
