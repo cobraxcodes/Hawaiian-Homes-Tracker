@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/cobraxcodes/Hawaiian-Homes-Tracker#readme",
   "dependencies": {
-    "bootstrap": "^5.3.6"
+    "bootstrap": "^5.3.6",
+    "mongodb": "^6.16.0"
   }
 }
