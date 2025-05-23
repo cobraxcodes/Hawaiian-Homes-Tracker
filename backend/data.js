@@ -562,9 +562,7 @@ data = [
     {"Name": "AH SUI-AGLIPAY, DAWNMARIE A", "App Date": "09 17 2013", "Area Code": 291, "I/W Rank": 4299, "Zip Code": "96792"},
     {"Name": "AH TOU, FRANK P", "App Date": "10 01 2010", "Area Code": 391, "I/W Rank": 6231, "Zip Code": "96750"},
     {"Name": "AH TOU, FRANK P", "App Date": "10 01 2010", "Area Code": 393, "I/W Rank": 4849, "Zip Code": "96750"},
-    {"Name": "AH TOU, JEANNETTE M", "App Date": "12 22 1993", "Area Code": 293, "I/W Rank": 1139, "Zip Code": "96704"}
-]
-[
+    {"Name": "AH TOU, JEANNETTE M", "App Date": "12 22 1993", "Area Code": 293, "I/W Rank": 1139, "Zip Code": "96704"},
     {"Name": "AH TOU, JEANNETTE M", "App Date": "12 22 1993", "Area Code": 391, "I/W Rank": "3450", "Zip Code": "96704"},
     {"Name": "AH TOU, ROGER K", "App Date": "08 11 2004", "Area Code": 193, "I/W Rank": "5345", "Zip Code": "96797"},
     {"Name": "AH TOU, ROGER K", "App Date": "09 03 1985", "Area Code": 391, "I/W Rank": "517", "Zip Code": "96797"},
