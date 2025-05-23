@@ -5,7 +5,8 @@ The Hawaiian Homes Tracker is a user-friendly web application designed to stream
 
 
 ## Tech Stack
-Frontend: HTML, CSS, Javascript, Bootstrap framework, axios
+Frontend: HTML, CSS, Javascript, Bootstrap, Axios
+Backend: Mongoose, Mongodb Atlas, Express, nodemon, morgan
 
 ## Wire Frame
 ![Home Page](docs/screenshots/homepage.png)
