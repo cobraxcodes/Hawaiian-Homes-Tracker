@@ -1,11 +1,11 @@
 const mongoose = require ('mongoose')
 
 const applicantSchema = new mongoose.Schema({
-    areaCode: {type: Number, required: true},
     name: {type: String, required: true},
-    applicationDate : {type: Date, required: true},
-    status: {type: String, required: false},
-    waitListPosition: {type: Number, required: true}
+    areaCode: {type: Number, required: true},
+    applicationDate : {type: String, required: true},
+    waitListPosition: {type: Number},
+    zipCode: {type: String}
 
 })
 
