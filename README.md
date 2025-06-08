@@ -30,9 +30,9 @@ Includes error handlines for known and unknown errors, invalid requests and data
 
 
 ## Future Roadmap
-- [] Frontend Application: Build a React-baesd frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
--[] Application Search and Filtering: Allow users to search applicants by name, application date, rank by area, or island region.
--[] User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions build in this REST API.
--[] Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
--[] Integrate a notification system for status changes.
--[] Community feedback and suggestion form via frontend.
+- Frontend Application: Build a React-baesd frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
+- Application Search and Filtering: Allow users to search applicants by name, application date, rank by area, or island region.
+- User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions build in this REST API.
+- Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
+- Integrate a notification system for status changes.
+- Community feedback and suggestion form via frontend.
