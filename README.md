@@ -15,18 +15,18 @@ This flow chart outlines the request-response cycle for the Hawaiian Homes Track
 routed to specific controller functions, and how those controller functions interact with MongdoDB Atlas via Mongoose.
 
 ## Features
-- **RESTful API Endpoints: 
+- **RESTful API Endpoints:**
 Provides GET, POST, PATCH, and DELETE routes to manage Hawaiian Homes waitilist applicant data.
-- **Manually Parse Waitlist Data:
+- **Manually Parse Waitlist Data:**
 Contains over 40,000+ applicant records manually parsed from misaligned PDF tables provided by DHHL.
-- **MongoDB Atlas Integration:
+- **MongoDB Atlas Integration:**
 Stores all applicant records in a secure, cloud-hosted MongoDB Atlas database.
-- **Modular Controller Structure:
+- **Modular Controller Structure:**
 Cleanly separates route handling and business logic for maintainable, scalable code.
-- **CRUD Operations for Applications
-- **Error Handling and Validation:
+- **CRUD Operations for Applications**
+- **Error Handling and Validation:**
 Includes error handlines for known and unknown errors, invalid requests and database errors.
-- **Open Foundation for Frontend Development.
+- **Open Foundation for Frontend Development**
 
 
 ## Future Roadmap
