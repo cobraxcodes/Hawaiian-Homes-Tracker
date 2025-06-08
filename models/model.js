@@ -1,14 +1,14 @@
 const mongoose = require ('mongoose')
 
-const applicantSchema = new mongoose.Schema({
+const applicationSchema = new mongoose.Schema({
     name: {type: String, required: true},
+    applicationDate : {type: Date, required: true},
     areaCode: {type: Number, required: true},
-    applicationDate : {type: String, required: true},
     waitListPosition: {type: Number},
     zipCode: {type: String}
 
 })
 
-const applicants = mongoose.model('Applicant', applicantSchema)
+const applications = mongoose.model('Applications', applicationSchema)
 
-module.exports = applicants
+module.exports = applications
