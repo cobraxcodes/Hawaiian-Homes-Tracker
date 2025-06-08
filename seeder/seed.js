@@ -1640,6 +1640,7 @@ const seedDB = async () =>{
     try{
         await mongoose.connect(mongoURI)
         await applications.insertMany(data)
+        console.log('Successfully seeded into MongoDB')
         await mongoose.disconnect()
     }catch(error){
         console.log(`Unable to seed data into MongoDB, Error: ${error.message}`)
