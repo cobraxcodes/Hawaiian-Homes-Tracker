@@ -5,13 +5,13 @@ import logger from './utils/logger.js'
 import {connect} from './database/database.js'
 
 const app = express() //creating express app
-const port = 5000;
+const port = 4044;
 
 // no templating engine
 
 // ~~~~ MIDDLEWARES ~~~~
 app.use(express.json()) 
-app.use(morgan(':method: url| Status: :status | Time: :response-time-ms| Date: :date[clf]'))
+app.use(morgan(':method: url| Status: :status | Time: :response-time ms| Date: :date[clf]'))
 
 // ~~~~~~~~USING CONNECT FN TO CONNECT TO DATABASE ~~~~~~~
 const start = async() =>{
@@ -29,6 +29,8 @@ start()
 
 
 // ~~~~~~~ROUTES~~~~~~~
+app.get('/applications', getAll)
+
 
 
 

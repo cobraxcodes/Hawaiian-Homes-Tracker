@@ -7,7 +7,7 @@ import applications from "../models/model.js";
 
 
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
-exports.getAll = async(req,res,next) =>{
+const getAll = async(req,res,next) =>{
     try{
         const allApplications = await applications.find()
         res.status(200).json({
@@ -18,3 +18,5 @@ exports.getAll = async(req,res,next) =>{
     }
 
 }
+
+export default getAll
