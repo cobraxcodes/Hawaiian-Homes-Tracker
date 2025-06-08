@@ -1,9 +1,9 @@
-const mongoose = require ('mongoose')
+import mongoose from "mongoose"
 
 const applicationSchema = new mongoose.Schema({
     name: {type: String, required: true},
     applicationDate : {type: Date, required: true},
-    areaCode: {type: Number, required: true},
+    rank: {type: Number, required: true},
     waitListPosition: {type: Number},
     zipCode: {type: String}
 
@@ -11,4 +11,4 @@ const applicationSchema = new mongoose.Schema({
 
 const applications = mongoose.model('Applications', applicationSchema)
 
-module.exports = applications
+export default  applications
