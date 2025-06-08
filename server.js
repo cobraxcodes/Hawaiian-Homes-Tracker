@@ -1,7 +1,7 @@
 import getAll from './controller/controller.js'
 import express from 'express'
 import morgan from 'morgan'
-import winston from 'winston'
+import logger from './utils/logger.js'
 import {connect} from './database/database.js'
 
 const app = express() //creating express app
@@ -18,11 +18,23 @@ const start = async() =>{
     try{
         await connect()
         app.listen(port, ()=>{
-            console.log(`Server is listening on port ${port}`) // change later to a winston logger
+            logger.info(`Server is listening on port ${port}`) // change later to a winston logger
         })
     }catch(error){
-        console.log(`Unable to connect to server, Error: ${error.message} \n Stack Trace: ${error.stack}`)
+        logger.errored(`Unable to connect to server, Error: ${error.message} \n Stack Trace: ${error.stack}`)
     }
 }
 
 start()
+
+
+// ~~~~~~~ROUTES~~~~~~~
+
+
+
+
+// ~~~~~~ GLOBAL ERROR HANDLER ~~~~~~~
+app.use((err,res,req,next)=>{
+    logger.error(`Something went wrong! Error: ${err.message} \n Stack Trace:${err.stack}`)
+    res.status(500).send('Something went wrong! Please try again later!')
+})

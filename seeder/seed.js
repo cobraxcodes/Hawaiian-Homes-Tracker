@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: '../.env'})
 import mongoose from 'mongoose'
+import logger from '../utils/logger.js'
 import applications from '../models/model.js'
 
 
@@ -1640,10 +1641,10 @@ const seedDB = async () =>{
     try{
         await mongoose.connect(mongoURI) // awaits promise from connecting to mongoURI
         await applications.insertMany(data) // awaits promise from insertingMany data in the database
-        console.log('Successfully seeded into MongoDB') // logs if true
+        logger.info('Successfully seeded into MongoDB') // logs if true
         await mongoose.disconnect() // disconnects itself right after seeding to prevent continuous connection
     }catch(error){
-        console.log(`Unable to seed data into MongoDB, Error: ${error.message}`) // error message if unable to connect
+        logger.error(`Unable to seed data into MongoDB, Error: ${error.message}`) // error message if unable to connect
     }
 }
 
