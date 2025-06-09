@@ -1,4 +1,4 @@
-import {getAll,getLastName, getRanks} from './controller/controller.js'
+import {getAll,getLastName, getRanks, getZipCode} from './controller/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -30,8 +30,11 @@ start()
 
 // ~~~~~~~ROUTES~~~~~~~
 app.get('/applications', getAll) // get all route
-app.get('/applications/:lastname', getLastName) // get by last name\
-app.get('/applications/ranks')
+app.get('/applications/rank', getRanks) // get all ranks route
+app.get('/applications/:zipcode', getZipCode) // get route for zipcodes
+app.get('/applications/:lastname', getLastName) // get by last name
+
+
 
 
 

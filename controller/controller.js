@@ -44,5 +44,23 @@ const getLastName = async(req,res,next) => {
          next(err)
     }
 }
+const getZipCode = async (req,res,next) =>{
+    try{
+        const findByZipCode = await applications.find({zipCode: req.params.zipcode})
+        console.log(req.params.zipcode)
+        if(findByZipCode.length === 0){return res.status(404).send(`No Applications Found For Zipcode: ${req.params.zipcode}`)}
+        
+        res.status(200).json({
+            applications: findByZipCode
+        })
+    }catch(err){
+        next(err)
+    }
+}
 
-export {getAll, getLastName, getRanks}
+
+
+
+
+
+export {getAll, getLastName, getRanks, getZipCode}
