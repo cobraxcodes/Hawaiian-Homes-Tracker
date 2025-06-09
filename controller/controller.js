@@ -19,9 +19,9 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
 
 }
 
-const getRanks = async(req,res,next) =>{
+const getRanks = async(req,res,next) =>{ // GET ALL RANKS INCLUDING NAME 
     try{
-        const allRanks = await applications.find({}, {name:1, rank:1, _id:0})
+        const allRanks = await applications.find({}, {name:1, rank:1, _id:0, zipCode: 1})
         res.status(200).json({
             applications: allRanks
         })
