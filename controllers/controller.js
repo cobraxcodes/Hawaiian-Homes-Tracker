@@ -78,9 +78,27 @@ const getZipCode = async (req,res,next) =>{
     }
 }
 
+// POST ROUTE
+const createApp = async(req,res,next) =>{
+    try{
+      const newApp = new applications(req.body)
+        const saveApp = newApp.save()
+
+        res.status(200).json({
+            message: "Application succesfully created!",
+            applications: newApp
+        })
+    }catch(err){
+        next(err)
+    }
+}
 
 
 
 
 
-export {getAll, getLastName, getRanks, getZipCode, getByFullName}
+
+
+
+ // EXPORTING LOGIC HERE
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp}

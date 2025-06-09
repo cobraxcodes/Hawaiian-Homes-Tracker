@@ -1,4 +1,4 @@
-import {getAll,getLastName, getRanks, getZipCode, getByFullName} from './controllers/controller.js'
+import {getAll,getLastName, getRanks, getZipCode, getByFullName, createApp} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -29,11 +29,14 @@ start()
 
 
 // ~~~~~~~ROUTES~~~~~~~
+// READ ROUTES
 app.get('/applications', getAll) // get all route
 app.get('/applications/rank', getRanks) // get all ranks route
 app.get('/applications/name/:fullname', getByFullName)
 app.get('/applications/lastname/:lastname', getLastName) // get by last name
 app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
+// CREATE ROUTE
+app.post('/applications/new', createApp) // post route for creating an app
 
 
 
@@ -44,7 +47,7 @@ app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
 
 
 // ~~~~~~ GLOBAL ERROR HANDLER ~~~~~~~
-app.use((err,res,req,next)=>{
+app.use((err,req,res,next)=>{
     logger.error(`Something went wrong! Error: ${err.message} \n Stack Trace:${err.stack}`)
      res.status(500).send('Something went wrong! Please try again later!')
 })
