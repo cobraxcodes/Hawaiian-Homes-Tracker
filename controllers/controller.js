@@ -9,7 +9,7 @@ import applications from "../models/model.js";
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
 const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
     try{
-        const allApplications = await applications.find()
+        const allApplications = await applications.find() //using mongoose .find() too look up all docs in collection
         res.status(200).json({
             applications: allApplications
         })
@@ -21,7 +21,7 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
 
 const getRanks = async(req,res,next) =>{ // GET ALL RANKS INCLUDING NAME 
     try{
-        const allRanks = await applications.find({}, {name:1, rank:1, _id:0, zipCode: 1})
+        const allRanks = await applications.find({}, {name:1, rank:1, _id:0, zipCode: 1}) //passing a query what i want to be rendered form find.. 1 suggests to include , 0 is no
         res.status(200).json({
             applications: allRanks
         })
@@ -31,7 +31,8 @@ const getRanks = async(req,res,next) =>{ // GET ALL RANKS INCLUDING NAME
 }
 const getLastName = async(req,res,next) => {
     try{
-        const pattern = req.params.lastname.trim().replace(/[, ]+/g, '[,\\s]*');
+        const pattern = req.params.lastname.trim().replace(/[, ]+/g, '[,\\s]*'); // using .trim here to remove white space from beginning and end of string
+        //  and replace commas or spaces with placeholder string
         const regex = new RegExp(`^${pattern},`, 'i')
         const matches = await applications.find({
             name:regex
@@ -48,7 +49,7 @@ const getLastName = async(req,res,next) => {
 const getByFullName = async(req,res,next) =>{
     try{
         const findByFullName = await applications.findOne({
-        name: new RegExp(`^${req.params.fullname}$`, "i")
+        name: new RegExp(`^${req.params.fullname}$`, "i") // querying with reg ex to make it case insensitve
     })
         if(!findByFullName){return res.status(404).send("No Application Found!")}
 
@@ -67,7 +68,7 @@ const getZipCode = async (req,res,next) =>{
     try{
         const findByZipCode = await applications.find({zipCode: req.params.zipcode})
         console.log(req.params.zipcode)
-        if(findByZipCode.length === 0){return res.status(404).send(`No Applications Found For Zipcode: ${req.params.zipcode}`)}
+        if(findByZipCode.length === 0){return res.status(404).send(`No Applications Found For Zipcode: ${req.params.zipcode}`)} // return err if no zipcode provided
         
         res.status(200).json({
             applications: findByZipCode

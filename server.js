@@ -1,4 +1,4 @@
-import {getAll,getLastName, getRanks, getZipCode, getByFullName} from './controller/controller.js'
+import {getAll,getLastName, getRanks, getZipCode, getByFullName} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
