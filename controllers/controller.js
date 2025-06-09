@@ -98,7 +98,7 @@ const updateApp = async(req,res,next) =>{
         // get the app that needs updating
         const existingApp = await applications.findById(req.params.id)
         if(!existingApp){return res.status(200).json({message: "No Application Found!"})}
-        const updateApp = await applications.findByIdAndUpdate(req.params.id, {
+        const updateApp = await applications.findByIdAndUpdate({_id: req.params.id}, {
             name: req.body.name ?? existingApp.name,
             applicationDate: req.body.applicationDate ?? existingApp.applicationDate,
             rank: req.body.rank ?? existingApp.rank,
@@ -116,9 +116,20 @@ const updateApp = async(req,res,next) =>{
 }
 
 
-
+    // DELETE ROUTE
+    const deleteApp = async (req,res,next) =>{
+        try{
+        const appDelete = await applications.findOneAndDelete({_id: req.params.id})
+        if(!appDelete){return res.status(404).send("No Application Found!")}
+        res.status(200).json({
+            message: "Application Successfully Deleted!"
+        })
+        }catch(err){
+            next(err)
+        }
+    }
 
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp}

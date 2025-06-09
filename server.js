@@ -1,4 +1,4 @@
-import {getAll,getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp} from './controllers/controller.js'
+import {getAll,getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -39,6 +39,8 @@ app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
 app.post('/applications/new', createApp) // post route for creating an app
 //UPDATE ROUTE
 app.patch('/applications/:id', updateApp) // updates an application 
+// DELETE ROUTE
+app.delete('/applications/:id', deleteApp)
 
 
 
