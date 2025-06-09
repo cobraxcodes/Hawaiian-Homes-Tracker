@@ -36,7 +36,7 @@ const getLastName = async(req,res,next) => {
         const matches = await applications.find({
             name:regex
         })
-        if(!matches.length){return res.status(404).send("No Applications Found!")}
+        if(!matches.length){return res.status(404).send("No Application Found!")}
         res.status(200).json({
             applications: matches
         })
@@ -44,6 +44,25 @@ const getLastName = async(req,res,next) => {
          next(err)
     }
 }
+
+const getByFullName = async(req,res,next) =>{
+    try{
+        const findByFullName = await applications.findOne({
+        name: new RegExp(`^${req.params.fullname}$`, "i")
+    })
+        if(!findByFullName){return res.status(404).send("No Application Found!")}
+
+        res.status(200).json({
+        applications: findByFullName
+    })
+    }catch(err){
+        next(err)
+    }
+ 
+ 
+}
+
+
 const getZipCode = async (req,res,next) =>{
     try{
         const findByZipCode = await applications.find({zipCode: req.params.zipcode})
@@ -63,4 +82,4 @@ const getZipCode = async (req,res,next) =>{
 
 
 
-export {getAll, getLastName, getRanks, getZipCode}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName}
