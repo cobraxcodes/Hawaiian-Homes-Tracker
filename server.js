@@ -1,4 +1,4 @@
-import getAll from './controller/controller.js'
+import {getAll, getByName} from './controller/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -29,7 +29,8 @@ start()
 
 
 // ~~~~~~~ROUTES~~~~~~~
-app.get('/applications', getAll)
+app.get('/applications', getAll) // get all route
+app.get('/applications/:name', getByName) // get by name route 
 
 
 
@@ -38,5 +39,5 @@ app.get('/applications', getAll)
 // ~~~~~~ GLOBAL ERROR HANDLER ~~~~~~~
 app.use((err,res,req,next)=>{
     logger.error(`Something went wrong! Error: ${err.message} \n Stack Trace:${err.stack}`)
-    res.status(500).send('Something went wrong! Please try again later!')
+    return res.status(500).send('Something went wrong! Please try again later!')
 })
