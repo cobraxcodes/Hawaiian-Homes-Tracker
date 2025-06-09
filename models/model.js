@@ -4,7 +4,6 @@ const applicationSchema = new mongoose.Schema({
     name: {type: String, required: true},
     applicationDate : {type: Date, required: true},
     rank: {type: Number, required: true},
-    waitListPosition: {type: Number},
     zipCode: {type: String}
 
 })

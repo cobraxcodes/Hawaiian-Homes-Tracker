@@ -83,10 +83,32 @@ const createApp = async(req,res,next) =>{
     try{
       const newApp = new applications(req.body)
         const saveApp = newApp.save()
-
         res.status(200).json({
             message: "Application succesfully created!",
             applications: newApp
+        })
+    }catch(err){
+        next(err)
+    }
+}
+
+// UPDATE ROUTE
+const updateApp = async(req,res,next) =>{
+    try{
+        // get the app that needs updating
+        const existingApp = await applications.findById(req.params.id)
+        if(!existingApp){return res.status(200).json({message: "No Application Found!"})}
+        const updateApp = await applications.findByIdAndUpdate(req.params.id, {
+            name: req.body.name ?? existingApp.name,
+            applicationDate: req.body.applicationDate ?? existingApp.applicationDate,
+            rank: req.body.rank ?? existingApp.rank,
+            zipCode: req.body.zipCode ?? existingApp.zipCode 
+
+
+        }, {new: true, runValidators: true})
+        res.status(200).json({
+            message: `${existingApp.name} successfully updated!`,
+            applications: updateApp
         })
     }catch(err){
         next(err)
@@ -98,7 +120,5 @@ const createApp = async(req,res,next) =>{
 
 
 
-
-
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp}
