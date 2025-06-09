@@ -7,7 +7,7 @@ import applications from "../models/model.js";
 
 
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
-const getAll = async(req,res,next) =>{ // GET ALL LOGIC
+const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
     try{
         const allApplications = await applications.find()
         res.status(200).json({
@@ -19,19 +19,30 @@ const getAll = async(req,res,next) =>{ // GET ALL LOGIC
 
 }
 
-const getByName = async (req,res,next) =>{  // GET BY NAME LOGIC
+const getRanks = async(req,res,next) =>{
     try{
-        const applicationName = await applications.findOne({
-             name: new RegExp(`^${req.params.name}$`, "i")
+        const allRanks = await applications.find({}, {name:1, rank:1, _id:0})
+        res.status(200).json({
+            applications: allRanks
         })
-    if(!applicationName){return res.status(404).send('No application found!')}
-    res.status(200).json({
-        applications: applicationName
-    })
-    }catch(err){    
+    }catch(err){
         next(err)
     }
-
+}
+const getLastName = async(req,res,next) => {
+    try{
+        const pattern = req.params.lastname.trim().replace(/[, ]+/g, '[,\\s]*');
+        const regex = new RegExp(`^${pattern},`, 'i')
+        const matches = await applications.find({
+            name:regex
+        })
+        if(!matches.length){return res.status(404).send("No Applications Found!")}
+        res.status(200).json({
+            applications: matches
+        })
+    }catch(err){
+         next(err)
+    }
 }
 
-export {getAll, getByName}
+export {getAll, getLastName, getRanks}

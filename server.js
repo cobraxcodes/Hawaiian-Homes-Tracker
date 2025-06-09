@@ -1,4 +1,4 @@
-import {getAll, getByName} from './controller/controller.js'
+import {getAll,getLastName, getRanks} from './controller/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -30,7 +30,8 @@ start()
 
 // ~~~~~~~ROUTES~~~~~~~
 app.get('/applications', getAll) // get all route
-app.get('/applications/:name', getByName) // get by name route 
+app.get('/applications/:lastname', getLastName) // get by last name\
+app.get('/applications/ranks')
 
 
 
