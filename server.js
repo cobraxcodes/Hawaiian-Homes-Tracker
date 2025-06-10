@@ -1,4 +1,4 @@
-import {getAll,getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp} from './controllers/controller.js'
+import {getAll,getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -29,6 +29,12 @@ start()
 
 
 // ~~~~~~~ROUTES~~~~~~~
+// USER ROUTES
+app.post('/applications/signup', signup) // post route for user signup
+
+
+
+
 // READ ROUTES
 app.get('/applications', getAll) // get all route
 app.get('/applications/rank', getRanks) // get all ranks route

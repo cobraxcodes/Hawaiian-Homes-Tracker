@@ -1,7 +1,38 @@
 import applications from "../models/model.js";
+import users from '../models/userSchema.js'
+import {createToken} from '../utils/jwtUtils.js'
 
 // ~~~~~~~ USER PROCESS ~~~~~~~~~
 // SIGNUP
+const signup = async (req,res,next) =>{
+    try{
+        const {username, password} = req.body
+       if(!username || username.length < 6){
+        return res.status(401).json({
+            message: `Invalid username. Usernames must have at least 6 characters`
+        })
+       }
+       if(!password || password.length < 8 ){
+        return res.status(401).json({
+            message: `Invalid password. Passwords must have at least 8 characters!`
+        })
+       }
+       const existingUser = await users.findOne({username})
+       if(existingUser){
+        return res.status(400).json({
+            message: `Username ${username} exists. Please try again!`
+        })
+       }
+       const newUser = new users({username, password})
+       const saveUser = await newUser.save()
+       const token = createToken({username})
+       res.status(201).json({
+        message: "User created sucessfully!", token
+       })
+    }catch(err){
+        next(err)
+    }
+}
 // LOGIN
 // LOGOUT
 
@@ -132,4 +163,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup}
