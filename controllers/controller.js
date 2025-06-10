@@ -64,6 +64,29 @@ const login = async(req,res,next) =>{
 }
 
 // LOGOUT
+ const logout = async (req,res,next) =>{
+     // create logged out token array
+    const loggedOutTokens = []
+    try{
+        //get token
+        const token = req.headers.authorization?.split(' ')[1]
+         // push given token by user to logged out token
+         if(loggedOutTokens.includes(token)){
+            res.status(404).json({
+                message: "Already logged out"
+            })
+         }
+        loggedOutTokens.push(token)
+        res.status(200).json({    
+            //return sucessful logout
+            message: "Logout successful!"
+        })
+    }catch(err){ 
+        next(err)
+    }
+ }
+   
+// DELETE A USER
 
 
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
@@ -192,4 +215,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout}

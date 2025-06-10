@@ -1,4 +1,5 @@
-import {getAll,getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login} from './controllers/controller.js'
+import {getAll,getLastName, getRanks, getZipCode, 
+    getByFullName, createApp, updateApp, deleteApp,signup, login, logout} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -32,6 +33,7 @@ start()
 // USER ROUTES
 app.post('/applications/signup', signup) // post route for user signup
 app.post('/applications/login', login) // post route for user login 
+app.post('/applications/logout', logout)
 
 
 
