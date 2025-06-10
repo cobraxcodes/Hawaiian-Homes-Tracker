@@ -1,6 +1,6 @@
 import applications from "../models/model.js";
 
-// USER PROCESS 
+// ~~~~~~~ USER PROCESS ~~~~~~~~~
 // SIGNUP
 // LOGIN
 // LOGOUT

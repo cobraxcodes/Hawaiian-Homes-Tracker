@@ -33,6 +33,8 @@ userSchema.pre('save', async function (next){
     next()
 })
 
+userSchema.post('')
+
  const user = mongoose.model('User', userSchema)
 
 export default user
