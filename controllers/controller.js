@@ -87,7 +87,32 @@ const login = async(req,res,next) =>{
  }
    
 // DELETE A USER
-
+ 
+    const deleteUser = async (req,res,next) =>{
+        try{
+            // destructure username and password
+            const {username, password} = req.body
+            //check username if inside users db
+            const user = await users.findOne({username})
+               // if not, return w 401
+            if(!user){return res.status(404).json({message: 'No User Found!'})}
+              // if yes, proceed to check password
+            const verifyPassword = await bcrypt.compare(password, user.password)
+            // if password wrong, return 401
+            if(!verifyPassword){return res.status(401).json({message: "Cannot verufy password! Unable to delete account"})}
+            // if all true delete user
+            const deleteUser = await users.findOneAndDelete({username})
+              // send res successful
+            res.status(200).json({
+                message: "Successfully deleted user!"
+            })
+        }catch(err){
+            next(err)
+        }
+    }
+    //if no user return and send 401
+    //send a response 200
+    
 
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
 const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
@@ -215,4 +240,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser}
