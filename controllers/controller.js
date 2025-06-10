@@ -1,6 +1,7 @@
 import applications from "../models/model.js";
 import users from '../models/userSchema.js'
 import {createToken} from '../utils/jwtUtils.js'
+import bcrypt from 'bcrypt'
 
 // ~~~~~~~ USER PROCESS ~~~~~~~~~
 // SIGNUP
@@ -34,6 +35,34 @@ const signup = async (req,res,next) =>{
     }
 }
 // LOGIN
+const login = async(req,res,next) =>{
+    try{
+        // destructure req body username and password
+        const {username, password} = req.body
+        // if  user does not exists return 401
+        const user = await users.findOne({username})
+        if(!user){
+            return res.status(401).json({
+                message: "Invalid Login! No user found!"
+            })
+        }
+        //if username is there, take password and compare using bcrypt
+        const authenticatePassword = await bcrypt.compare(password, user.password )
+        // if passwords do not match, return 401 again
+        if(!authenticatePassword){
+            return res.status(401).json({message: 'Invalid password!'})
+        }
+        // if password is valid, token is then given to user specifically tied to their username
+           const token = createToken({username: user.name })
+    // send a response
+        res.status(200).json({
+            message: "Successful login!", token
+        })
+    }catch(err){
+        next(err)
+    }
+}
+
 // LOGOUT
 
 
@@ -163,4 +192,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login}
