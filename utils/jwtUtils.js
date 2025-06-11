@@ -8,7 +8,11 @@ const createToken = payload =>{
 }
 
 const verifyToken = token =>{
-    return jwt.verify(token, secretKey)
+    try{
+         return jwt.verify(token, secretKey)
+    }catch(err){
+        return null
+    }
 }
 
 export {createToken, verifyToken}

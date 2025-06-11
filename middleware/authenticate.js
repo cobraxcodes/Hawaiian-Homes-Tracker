@@ -8,8 +8,9 @@ const authenticate = (req,res,next) =>{
     }
     try{
         const decoded = verifyToken(token)
-        if(!decoded){return res.status(400).send('Unable to verify token!')}
-            if(loggedOutTokens.includes(token)){
+        if(!decoded)
+            {return res.status(400).send('Unable to verify token!')}
+       if(loggedOutTokens.includes(token)){
         res.status(401).json({
             message: "Token inactive! Please log in again!"
         })
