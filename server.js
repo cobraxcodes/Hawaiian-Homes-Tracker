@@ -1,4 +1,6 @@
 import limiter from './utils/rate-limiter.js'
+import cors from 'cors'
+import helmet from 'helmet'
 import {getAll,getLastName, getRanks, getZipCode, 
  getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser} from './controllers/controller.js'
 import express from 'express'
@@ -20,13 +22,15 @@ app.use(async (req,res,next) =>{
        await limiter.consume(req.ip) // checks user IP address if rate limit quota has been reached
         // if not yet reached, proceed to next() middleware . if yes, move to catch block
         next()
-    }catch(err){ 
+    }catch(err){  // checkign err (contains the rate limiter response when the rate limit exceeds)
           if(err.remainingPoints <= 5){
         return res.status(429).send('Too Many Requests!')
     }
     next(err)
     }
 })
+app.use(cors())
+app.use(helmet())
 app.use(express.json()) 
 app.use(morgan(':method: url| Status: :status | Time: :response-time ms| Date: :date[clf]'))
 
