@@ -47,11 +47,11 @@ app.get('/applications/name/:fullname', getByFullName)
 app.get('/applications/lastname/:lastname', getLastName) // get by last name
 app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
 // CREATE ROUTE
-app.post('/applications/new', authenticate, createApp) // post route for creating an app
+app.post('/applications/new', authenticate, createApp) // post route for creating an app - authenticate ok ✅
 //UPDATE ROUTE
-app.patch('/applications/:id', authenticate, updateApp) // updates an application 
+app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok ✅
 // DELETE ROUTE
-app.delete('/applications/:id', authenticate, deleteApp)
+app.delete('/applications/:id', authenticate, deleteApp) // deletes an application
 
 
 
