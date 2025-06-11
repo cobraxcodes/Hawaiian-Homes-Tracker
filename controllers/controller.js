@@ -2,6 +2,7 @@ import applications from "../models/model.js";
 import users from '../models/userSchema.js'
 import {createToken} from '../utils/jwtUtils.js'
 import bcrypt from 'bcrypt'
+import client from "../utils/redis.js";
 const loggedOutTokens = []
 
 // ~~~~~~~ USER PROCESS ~~~~~~~~~
@@ -118,13 +119,37 @@ const login = async(req,res,next) =>{
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
 const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
     try{
-        const allApplications = await applications.find() //using mongoose .find() too look up all docs in collection
-        res.status(200).json({
-            applications: allApplications
-        })
+          //await for client to get cached applications (it needs a str passed)
+        const cachedApplications = await client.get('applications')
+           // if there is cached apps then return using json.parse(cachedApps)
+           if(cachedApplications){
+            // add console log that 'applications' will be coming from caching
+            console.log('Showing applications from cache')
+            return res.json(JSON.parse(cachedApplications))
+           }
+            // if not, console that apps will be retrieved from db
+            console.log('Retrieving applications from database')
+              // then use .find
+            const allApplications = await applications.find()
+               // add the apps into the cache for 30 seconds using client.setEx( and stringify it)
+               await client.setEx('applications', 30, JSON.stringify(allApplications))
+                   // send results
+               res.status(200).json({
+                applications: allApplications
+               })
+    // same catch (err)
     }catch(err){
         next(err)
     }
+    /// -- earlier version without caching ---
+    // try{
+    //     const allApplications = await applications.find() //using mongoose .find() too look up all docs in collection
+    //     res.status(200).json({
+    //         applications: allApplications
+    //     })
+    // }catch(err){
+    //     next(err)
+    // }
 
 }
 

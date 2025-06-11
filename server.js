@@ -1,4 +1,4 @@
-import limiter from './utils/rate-limiter.js'
+import limiter from './middleware/rate-limiter.js'
 import cors from 'cors'
 import helmet from 'helmet'
 import {getAll,getLastName, getRanks, getZipCode, 
