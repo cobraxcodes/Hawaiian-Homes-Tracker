@@ -8,7 +8,7 @@ const mongoURI = process.env.MONGO_URI || "mongodb+srv://cobraxcodes:<db_passwor
 const connect = async () =>{
     try{
         await mongoose.connect(mongoURI)
-        logger.info(`Successfully connected to ${mongoose.connection.name} database`)
+        console.log(`Successfully connected to ${mongoose.connection.name} database`)
     }catch(error){
         logger.error(`Failed to connect to database`)
     }

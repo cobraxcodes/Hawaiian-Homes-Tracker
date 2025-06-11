@@ -4,6 +4,7 @@ import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
 import {connect} from './database/database.js'
+import authenticate from './middleware/authenticate.js'
 
 const app = express() //creating express app
 const port = 4044;
@@ -19,10 +20,10 @@ const start = async() =>{
     try{
         await connect()
         app.listen(port, ()=>{
-            logger.info(`Server is listening on port ${port}`) // change later to a winston logger
+            console.log(`Server is listening on port ${port}`) // change later to a winston logger
         })
     }catch(error){
-        logger.errored(`Unable to connect to server, Error: ${error.message} \n Stack Trace: ${error.stack}`)
+        logger.error(`Unable to connect to server, Error: ${error.message} \n Stack Trace: ${error.stack}`)
     }
 }
 
@@ -46,11 +47,11 @@ app.get('/applications/name/:fullname', getByFullName)
 app.get('/applications/lastname/:lastname', getLastName) // get by last name
 app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
 // CREATE ROUTE
-app.post('/applications/new', createApp) // post route for creating an app
+app.post('/applications/new', authenticate, createApp) // post route for creating an app
 //UPDATE ROUTE
-app.patch('/applications/:id', updateApp) // updates an application 
+app.patch('/applications/:id', authenticate, updateApp) // updates an application 
 // DELETE ROUTE
-app.delete('/applications/:id', deleteApp)
+app.delete('/applications/:id', authenticate, deleteApp)
 
 
 

@@ -2,6 +2,7 @@ import applications from "../models/model.js";
 import users from '../models/userSchema.js'
 import {createToken} from '../utils/jwtUtils.js'
 import bcrypt from 'bcrypt'
+const loggedOutTokens = []
 
 // ~~~~~~~ USER PROCESS ~~~~~~~~~
 // SIGNUP
@@ -66,7 +67,7 @@ const login = async(req,res,next) =>{
 // LOGOUT
  const logout = async (req,res,next) =>{
      // create logged out token array
-    const loggedOutTokens = []
+    
     try{
         //get token
         const token = req.headers.authorization?.split(' ')[1]
@@ -240,4 +241,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser}
+export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens}
