@@ -51,8 +51,7 @@ app.post('/applications/new', authenticate, createApp) // post route for creatin
 //UPDATE ROUTE
 app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok ✅
 // DELETE ROUTE
-app.delete('/applications/:id', authenticate, deleteApp) // deletes an application
-
+app.delete('/applications/:id', authenticate, deleteApp) // deletes an application - authenticate ok ✅
 
 
 
