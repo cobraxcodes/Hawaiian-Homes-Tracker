@@ -119,24 +119,39 @@ const login = async(req,res,next) =>{
 // ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
 const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
     try{
+        // creating pagination to give prevent timeout due to big data set
+        const page = parseInt(req.query.page) || 1
+        const limit = parseInt(req.query.limit) || 20
+        const skip = (page - 1) * limit 
+
+        //cache key to store pages indiviually
+        const cacheKey = `applications_page_${page}_limit_${limit}`
           //await for client to get cached applications (it needs a str passed)
-        const cachedApplications = await client.get('applications')
+        const cachedApplications = await client.get(cacheKey)
            // if there is cached apps then return using json.parse(cachedApps)
            if(cachedApplications){
             // add console log that 'applications' will be coming from caching
-            console.log('Showing applications from cache')
+            console.log(`Showing applications from cache: ${cacheKey}`)
             return res.json(JSON.parse(cachedApplications))
            }
             // if not, console that apps will be retrieved from db
             console.log('Retrieving applications from database')
               // then use .find
-            const allApplications = await applications.find()
-               // add the apps into the cache for 30 seconds using client.setEx( and stringify it)
-               await client.setEx('applications', 30, JSON.stringify(allApplications))
-                   // send results
-               res.status(200).json({
+            const allApplications = await applications.find().skip(skip).limit(limit).select()
+            const total = await applications.countDocuments()
+
+            const responseData = {
+                page,
+                limit,
+                total,
+                totalPages: Math.ceil(total/limit),
                 applications: allApplications
-               })
+            }
+
+               // add the apps into the cache for 30 seconds using client.setEx( and stringify it)
+               await client.setEx(cacheKey, 30, JSON.stringify(responseData))
+                   // send results
+               res.status(200).json(responseData)
     // same catch (err)
     }catch(err){
         next(err)
