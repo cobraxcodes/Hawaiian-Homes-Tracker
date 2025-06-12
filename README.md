@@ -4,15 +4,38 @@ Inspired by the Hawaiian Homes Commision Act, this project addresses the lack of
 This API serves as a free, open resource and backend foundation for future frontend applications that aim to display and manage Hawaiian Homes waitlist data in a user-friendly, accessible way for the community.
 
 ## Live demo link
+https://hawaiian-homes-tracker.onrender.com/applications
 
-
-## Tech Stack
-Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jwt, bcrypt, cors, helmet, rate limiting
+## Technologies Used
+Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
 
 ## REST API - Flow Chart
 ![Flow Chart ](docs/Hawaiian-Homes%20REST%20API.drawio.png)
-This flow chart outlines the request-response cycle for the Hawaiian Homes Tracker REST API. It visually represents how client requests are handled by API server,
-routed to specific controller functions, and how those controller functions interact with MongdoDB Atlas via Mongoose.
+**SIGNUP ROUTE**
+/applications/signup
+**LOGIN ROUTE**
+/applications/login
+**LOGOUT ROUTE**
+/applications/logout
+**DELETE USER**
+/applications/user
+**GET ALL ROUTE**
+/applications
+**GET BY RANK**
+/applications/rank
+**GET BY FULL NAME**
+/applications/name/:fullname
+**GET BY LAST NAME**
+/applications/lastname/:lastname
+**GET BY ZIPCODE**
+/applications/zipcode/:zipcode
+**CREATE ROUTE**
+/applications/new
+**UPDATE ROUTE**
+/applications/:id 
+**DELETE ROUTE**
+/applications/:id 
+
 
 ## Features
 - **RESTful API Endpoints:**
@@ -27,6 +50,7 @@ Cleanly separates route handling and business logic for maintainable, scalable c
 - **Error Handling and Validation:**
 Includes error handlines for known and unknown errors, invalid requests and database errors.
 - **Open Foundation for Frontend Development**
+- **Deployed On Render**
 
 
 ## Future Roadmap
