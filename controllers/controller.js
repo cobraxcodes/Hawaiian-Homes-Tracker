@@ -101,7 +101,7 @@ const login = async(req,res,next) =>{
               // if yes, proceed to check password
             const verifyPassword = await bcrypt.compare(password, user.password)
             // if password wrong, return 401
-            if(!verifyPassword){return res.status(401).json({message: "Cannot verufy password! Unable to delete account"})}
+            if(!verifyPassword){return res.status(401).json({message: "Cannot verify password! Unable to delete account"})}
             // if all true delete user
             const deleteUser = await users.findOneAndDelete({username})
               // send res successful

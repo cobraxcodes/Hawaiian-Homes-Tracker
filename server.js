@@ -35,10 +35,11 @@ app.use(express.json())
 app.use(morgan(':method: url| Status: :status | Time: :response-time ms| Date: :date[clf]'))
 
 // ~~~~~~~~USING CONNECT FN TO CONNECT TO DATABASE ~~~~~~~
+
 const start = async() =>{
     try{
         await connect()
-        app.listen(port, ()=>{
+        app.listen(port, '0.0.0.0', () =>{
             console.log(`Server is listening on port ${port}`) // change later to a winston logger
         })
     }catch(error){
@@ -48,8 +49,8 @@ const start = async() =>{
 
 start()
 
-
 // ~~~~~~~ROUTES~~~~~~~
+
 // USER ROUTES
 app.post('/applications/signup', signup) // post route for user signup
 app.post('/applications/login', login) // post route for user login 
@@ -71,12 +72,6 @@ app.post('/applications/new', authenticate, createApp) // post route for creatin
 app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok ✅
 // DELETE ROUTE
 app.delete('/applications/:id', authenticate, deleteApp) // deletes an application - authenticate ok ✅
-
-
-
-
-
-
 
 
 // ~~~~~~ GLOBAL ERROR HANDLER ~~~~~~~
