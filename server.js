@@ -39,7 +39,7 @@ app.use(morgan(':method: url| Status: :status | Time: :response-time ms| Date: :
 const start = async() =>{
     try{
         await connect()
-        app.listen(port, '0.0.0.0', () =>{
+        app.listen(port, () =>{
             console.log(`Server is listening on port ${port}`) // change later to a winston logger
         })
     }catch(error){
