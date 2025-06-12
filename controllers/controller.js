@@ -120,21 +120,23 @@ const login = async(req,res,next) =>{
 const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
     try{
         // creating pagination to give prevent timeout due to big data set
-        const page = parseInt(req.query.page) || 1
-        const limit = parseInt(req.query.limit) || 20
-        const skip = (page - 1) * limit 
-            const allApplications = await applications.find().skip(skip).limit(limit).select()
-            const total = await applications.countDocuments()
-            
-            const responseData = {
-                page,
-                limit,
-                total,
-                totalPages: Math.ceil(total/limit),
-                applications: allApplications
-            }
+        // const page = parseInt(req.query.page) || 1
+        // const limit = parseInt(req.query.limit) || 20
+        // const skip = (page - 1) * limit 
+            const allApplications = await applications.find()
+            // .skip(skip).limit(limit).select()
+            // const total = await applications.countDocuments()
+            // const responseData = {
+            //     page,
+            //     limit,
+            //     total,
+            //     totalPages: Math.ceil(total/limit),
+            //     applications: allApplications
+            // }
                    // send results
-               res.status(200).json(responseData)
+               res.status(200).json({
+                applications: allApplications
+               })
     // same catch (err)
     }catch(err){
         next(err)
