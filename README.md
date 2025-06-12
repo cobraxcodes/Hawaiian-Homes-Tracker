@@ -11,29 +11,29 @@ Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, js
 
 ## REST API - Flow Chart
 ![Flow Chart ](docs/Hawaiian-Homes%20REST%20API.drawio.png)
-**SIGNUP ROUTE**
+- **SIGNUP ROUTE**
 /applications/signup
-**LOGIN ROUTE**
+- **LOGIN ROUTE**
 /applications/login
-**LOGOUT ROUTE**
+- **LOGOUT ROUTE**
 /applications/logout
-**DELETE USER**
+- **DELETE USER**
 /applications/user
-**GET ALL ROUTE**
+- **GET ALL ROUTE**
 /applications
-**GET BY RANK**
+- **GET BY RANK**
 /applications/rank
-**GET BY FULL NAME**
+- **GET BY FULL NAME**
 /applications/name/:fullname
-**GET BY LAST NAME**
+- **GET BY LAST NAME**
 /applications/lastname/:lastname
-**GET BY ZIPCODE**
+- **GET BY ZIPCODE**
 /applications/zipcode/:zipcode
-**CREATE ROUTE**
+- **CREATE ROUTE**
 /applications/new
-**UPDATE ROUTE**
+- **UPDATE ROUTE**
 /applications/:id 
-**DELETE ROUTE**
+- **DELETE ROUTE**
 /applications/:id 
 
 
