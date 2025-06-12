@@ -2,7 +2,7 @@ import applications from "../models/model.js";
 import users from '../models/userSchema.js'
 import {createToken} from '../utils/jwtUtils.js'
 import bcrypt from 'bcrypt'
-import client from "../utils/redis.js";
+// import client from "../utils/redis.js";
 const loggedOutTokens = []
 
 // ~~~~~~~ USER PROCESS ~~~~~~~~~
@@ -123,23 +123,9 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
         const page = parseInt(req.query.page) || 1
         const limit = parseInt(req.query.limit) || 20
         const skip = (page - 1) * limit 
-
-        //cache key to store pages indiviually
-        const cacheKey = `applications_page_${page}_limit_${limit}`
-          //await for client to get cached applications (it needs a str passed)
-        const cachedApplications = await client.get(cacheKey)
-           // if there is cached apps then return using json.parse(cachedApps)
-           if(cachedApplications){
-            // add console log that 'applications' will be coming from caching
-            console.log(`Showing applications from cache: ${cacheKey}`)
-            return res.json(JSON.parse(cachedApplications))
-           }
-            // if not, console that apps will be retrieved from db
-            console.log('Retrieving applications from database')
-              // then use .find
             const allApplications = await applications.find().skip(skip).limit(limit).select()
             const total = await applications.countDocuments()
-
+            
             const responseData = {
                 page,
                 limit,
@@ -147,9 +133,6 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
                 totalPages: Math.ceil(total/limit),
                 applications: allApplications
             }
-
-               // add the apps into the cache for 30 seconds using client.setEx( and stringify it)
-               await client.setEx(cacheKey, 30, JSON.stringify(responseData))
                    // send results
                res.status(200).json(responseData)
     // same catch (err)
