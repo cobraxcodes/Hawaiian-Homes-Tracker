@@ -11,7 +11,7 @@ import authenticate from './middleware/authenticate.js'
 
 
 const app = express() //creating express app
-const port = process.env.PORT || 4044; // setting port here
+const port = process.env.PORT || 10000;; // setting port here
 
 // no templating engine
 
