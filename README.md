@@ -24,12 +24,13 @@ Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, js
 ### APPLICATIONS CRUD:
 - **CREATE ROUTE**
 /applications/new
+- **READ ROUTE (root/landing)**
+/
 - **UPDATE ROUTE**
 /applications/:id 
 - **DELETE ROUTE**
 /applications/:id 
-- **READ ROUTE**
-/
+
 
 ### APPLICATIONS PARAMS:
 - **GET BY RANK**
