@@ -1,18 +1,41 @@
 # Hawaiian-Homes-Tracker
-The Hawaiian Homes Tracker is a backend REST API built to streamline the managements of the Department of Hawaiian Home Lands (DHHL) waitlist for native Hawaiian homestead applications. 
+The Hawaiian Homes Tracker is the first ever independently built backend REST API built to streamline the managements of the Department of Hawaiian Home Lands (DHHL) waitlist for native Hawaiian homestead applications. 
 Inspired by the Hawaiian Homes Commision Act, this project addresses the lack of accessible, modern digital tools for tracking and managing waitlist data. Since the DHHL currently provides this data in misaligned, difficult to read and parse PDF tqables, all 40,000+ application records have been manually parse and structured to meet the API's model requirements. 
 This API serves as a free, open resource and backend foundation for future frontend applications that aim to display and manage Hawaiian Homes waitlist data in a user-friendly, accessible way for the community.
 
 ## Live demo link
+https://hawaiian-homes-tracker.onrender.com/applications
 
-
-## Tech Stack
-Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jwt, bcrypt, cors, helmet, rate limiting
+## Technologies Used
+Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
 
 ## REST API - Flow Chart
 ![Flow Chart ](docs/Hawaiian-Homes%20REST%20API.drawio.png)
-This flow chart outlines the request-response cycle for the Hawaiian Homes Tracker REST API. It visually represents how client requests are handled by API server,
-routed to specific controller functions, and how those controller functions interact with MongdoDB Atlas via Mongoose.
+- **SIGNUP ROUTE**
+/applications/signup
+- **LOGIN ROUTE**
+/applications/login
+- **LOGOUT ROUTE**
+/applications/logout
+- **DELETE USER**
+/applications/user
+- **GET ALL ROUTE**
+/applications
+- **GET BY RANK**
+/applications/rank
+- **GET BY FULL NAME**
+/applications/name/:fullname
+- **GET BY LAST NAME**
+/applications/lastname/:lastname
+- **GET BY ZIPCODE**
+/applications/zipcode/:zipcode
+- **CREATE ROUTE**
+/applications/new
+- **UPDATE ROUTE**
+/applications/:id 
+- **DELETE ROUTE**
+/applications/:id 
+
 
 ## Features
 - **RESTful API Endpoints:**
@@ -27,11 +50,13 @@ Cleanly separates route handling and business logic for maintainable, scalable c
 - **Error Handling and Validation:**
 Includes error handlines for known and unknown errors, invalid requests and database errors.
 - **Open Foundation for Frontend Development**
+- **Application Search and Filitering**
+Allows users to search applicants by name, rank by area, or zipcode.
 
 
 ## Future Roadmap
 - Frontend Application: Build a React-baesd frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
-- Application Search and Filtering: Allow users to search applicants by name, application date, rank by area, or island region.
+- Pagination to get routes
 - User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions build in this REST API.
 - Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
 - Integrate a notification system for status changes.
