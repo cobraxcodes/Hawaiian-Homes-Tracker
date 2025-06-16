@@ -54,7 +54,7 @@ Stores all applicant records in a secure, cloud-hosted MongoDB Atlas database.
 Cleanly separates route handling and business logic for maintainable, scalable code.
 - **CRUD Operations for Applications**
 - **Error Handling and Validation:**
-Includes error handlines for known and unknown errors, invalid requests and database errors.
+Includes error handlings for known and unknown errors using try/catch, global error handler, invalid requests and database errors.
 - **Open Foundation for Frontend Development**
 - **Application Search and Filitering**
 Allows users to search applicants by name, rank by area, or zipcode.
