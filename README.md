@@ -4,13 +4,14 @@ Inspired by the Hawaiian Homes Commision Act, this project addresses the lack of
 This API serves as a free, open resource and backend foundation for future frontend applications that aim to display and manage Hawaiian Homes waitlist data in a user-friendly, accessible way for the community.
 
 ## Live demo link
-https://hawaiian-homes-tracker.onrender.com/applications
+https://hawaiian-homes-tracker.onrender.com/
 
 ## Technologies Used
 Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
 
 ## REST API - Flow Chart
 ![Flow Chart ](docs/Hawaiian-Homes%20REST%20API.drawio.png)
+### USERS MODEL:
 - **SIGNUP ROUTE**
 /applications/signup
 - **LOGIN ROUTE**
@@ -19,8 +20,19 @@ Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, js
 /applications/logout
 - **DELETE USER**
 /applications/user
-- **GET ALL ROUTE**
-/applications
+
+### APPLICATIONS CRUD:
+- **CREATE ROUTE**
+/applications/new
+- **READ ROUTE (root/landing)**
+/
+- **UPDATE ROUTE**
+/applications/:id 
+- **DELETE ROUTE**
+/applications/:id 
+
+
+### APPLICATIONS PARAMS:
 - **GET BY RANK**
 /applications/rank
 - **GET BY FULL NAME**
@@ -29,12 +41,6 @@ Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, js
 /applications/lastname/:lastname
 - **GET BY ZIPCODE**
 /applications/zipcode/:zipcode
-- **CREATE ROUTE**
-/applications/new
-- **UPDATE ROUTE**
-/applications/:id 
-- **DELETE ROUTE**
-/applications/:id 
 
 
 ## Features
@@ -48,7 +54,7 @@ Stores all applicant records in a secure, cloud-hosted MongoDB Atlas database.
 Cleanly separates route handling and business logic for maintainable, scalable code.
 - **CRUD Operations for Applications**
 - **Error Handling and Validation:**
-Includes error handlines for known and unknown errors, invalid requests and database errors.
+Includes error handlings for known and unknown errors using try/catch, global error handler, invalid requests and database errors.
 - **Open Foundation for Frontend Development**
 - **Application Search and Filitering**
 Allows users to search applicants by name, rank by area, or zipcode.
