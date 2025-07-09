@@ -4,7 +4,7 @@ Inspired by the Hawaiian Homes Commision Act, this project addresses the lack of
 This API serves as a free, open resource and backend foundation for future frontend applications that aim to display and manage Hawaiian Homes waitlist data in a user-friendly, accessible way for the community.
 
 ## Live demo link
-https://hawaiian-homes-tracker.onrender.com/
+https://hawaiian-homes-tracker.onrender.com/applications
 
 ## Technologies Used
 Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
@@ -58,11 +58,12 @@ Includes error handlings for known and unknown errors using try/catch, global er
 - **Open Foundation for Frontend Development**
 - **Application Search and Filitering**
 Allows users to search applicants by name, rank by area, or zipcode.
+- **Pagination**
+Paginated with pages and limit option to improve site performance and user experience.
 
 
 ## Future Roadmap
 - Frontend Application: Build a React-baesd frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
-- Pagination to get routes
 - User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions build in this REST API.
 - Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
 - Integrate a notification system for status changes.
