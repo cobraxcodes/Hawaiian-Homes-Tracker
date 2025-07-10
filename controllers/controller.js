@@ -198,7 +198,7 @@ const getByFullName = async(req,res,next) =>{
 
 const getZipCode = async (req,res,next) =>{
     try{
-        const findByZipCode = await applications.find({zipCode: req.params.zipcode})
+        const findByZipCode = await applications.find({zipcode: req.params.zipcode})
         console.log(req.params.zipcode)
         if(findByZipCode.length === 0){return res.status(404).send(`No Applications Found For Zipcode: ${req.params.zipcode}`)} // return err if no zipcode provided
         
