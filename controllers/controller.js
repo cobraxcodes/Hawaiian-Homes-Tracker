@@ -234,7 +234,7 @@ const updateApp = async(req,res,next) =>{
             name: req.body.name ?? existingApp.name,
             applicationDate: req.body.applicationDate ?? existingApp.applicationDate,
             rank: req.body.rank ?? existingApp.rank,
-            zipCode: req.body.zipCode ?? existingApp.zipCode 
+            zipcode: req.body.zipcode ?? existingApp.zipcode 
 
 
         }, {new: true, runValidators: true})
