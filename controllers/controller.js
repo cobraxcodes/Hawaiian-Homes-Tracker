@@ -151,16 +151,19 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
 
 }
 
-const getRanks = async(req,res,next) =>{ // GET ALL RANKS INCLUDING NAME 
+const getRank = async(req,res,next) =>{ // GET ALL RANKS INCLUDING NAME 
     try{
-        const allRanks = await applications.find({}, {name:1, rank:1, _id:0, zipCode: 1}) //passing a query what i want to be rendered form find.. 1 suggests to include , 0 is no
+        const getByRank = await applications.find({rank: req.params.rank}) 
+        if(getByRank.length === 0){return res.status(404).send(`No Applications Found For Rank: ${req.params.rank}`)}
         res.status(200).json({
-            applications: allRanks
+            applications: getByRank
         })
     }catch(err){
         next(err)
     }
 }
+
+
 const getLastName = async(req,res,next) => {
     try{
         const pattern = req.params.lastname.trim().replace(/[, ]+/g, '[,\\s]*'); // using .trim here to remove white space from beginning and end of string
@@ -178,7 +181,7 @@ const getLastName = async(req,res,next) => {
     }
 }
 
-const getByFullName = async(req,res,next) =>{
+const getByFullName = async(req,res,next) =>{ // GET BY FULL NAME
     try{
         const findByFullName = await applications.findOne({
         name: new RegExp(`^${req.params.fullname}$`, "i") // querying with reg ex to make it case insensitve
@@ -196,7 +199,7 @@ const getByFullName = async(req,res,next) =>{
 }
 
 
-const getZipCode = async (req,res,next) =>{
+const getZipCode = async (req,res,next) =>{ // GET BY ZIPCODE
     try{
         const findByZipCode = await applications.find({zipcode: req.params.zipcode})
         console.log(req.params.zipcode)
@@ -209,6 +212,23 @@ const getZipCode = async (req,res,next) =>{
         next(err)
     }
 }
+
+const getAreaCode = async (req,res,next) =>{
+    try{
+        const findByAreaCode = await applications.find({areaCode: req.params.areacode})
+        console.log(req.params.areacode)
+        if(findByAreaCode.length === 0){return res.status(404).send(`No Applications Found For Area Code: ${req.params.areacode}`)}
+
+        res.status(200).json({
+            applications: findByAreaCode
+        })
+    }catch(err){
+        next(err)
+    }
+}
+
+
+
 
 // POST ROUTE
 const createApp = async(req,res,next) =>{
@@ -264,4 +284,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getLastName, getRanks, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens}
+export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens}

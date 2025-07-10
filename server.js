@@ -1,7 +1,7 @@
 import limiter from './middleware/rate-limiter.js'
 import cors from 'cors'
 import helmet from 'helmet'
-import {getAll,getLastName, getRanks, getZipCode, 
+import {getAll, getAreaCode, getLastName, getRank, getZipCode, 
  getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
@@ -62,16 +62,19 @@ app.delete('/applications/user', deleteUser) //delete route to delete user
 
 // READ ROUTES
 app.get('/applications', getAll) // get all route
-app.get('/applications/rank', getRanks) // get all ranks route
+app.get('/applications/rank/:rank', getRank) // get all ranks route
 app.get('/applications/name/:fullname', getByFullName)
 app.get('/applications/lastname/:lastname', getLastName) // get by last name
 app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
+app.get('/applications/areacode/:areacode', getAreaCode) // get by areacode
+
+
 // CREATE ROUTE
-app.post('/applications/new', authenticate, createApp) // post route for creating an app - authenticate ok ✅
+app.post('/applications/new', authenticate, createApp) // post route for creating an app - authenticate ok x`
 //UPDATE ROUTE
-app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok ✅
+app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok
 // DELETE ROUTE
-app.delete('/applications/:id', authenticate, deleteApp) // deletes an application - authenticate ok ✅
+app.delete('/applications/:id', authenticate, deleteApp) // deletes an application - authenticate ok 
 
 
 // ~~~~~~ GLOBAL ERROR HANDLER ~~~~~~~
