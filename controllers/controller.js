@@ -127,32 +127,44 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
         // ascending / descending
         const order = req.query.order === 'desc'? -1: 1; // takes a query called order and sets order to descending if -1 if explicitly declared or ascending by default 
 
-          const aggregated = await applications.aggregate([ // create a pipeline mongodb .. essentially an output becomes the input of the next equation/function
-      {
-        $group: { // creating a group
-          _id: "$name",
-          doc: { $first: "$$ROOT" }, //saves the first full document
-          minRank: { $min: { $toInt: "$rank" } } // finds the min rank (MEANING THE LATEST APP ) and convert to integer
-        }
-      },
-      {
-        $addFields: {
-          "doc.rank": "$minRank" // replace rank with minRank
-        }
-      },
-      {
-        $replaceRoot: { newRoot: "$doc" } // replaces old doc to new one .. the output from the aggregation pipeline
-      },
-      {
-        $sort: { rank: order } // sorts asc/desc based on order
-      },
-      {
-        $skip: skip // skips if declared
-      },
-      {
-        $limit: limit // limit if declared
+         const aggregated = await applications.aggregate([
+  {
+    $addFields: {
+      rankNumber: {
+        $toInt: {
+          $regexFind: {
+            input: "$rank",
+            regex: "[0-9]+"
+          }
+        }.match
       }
-    ]);
+    }
+  },
+  {
+    $group: {
+      _id: "$name",
+      doc: { $first: "$$ROOT" },
+      minRank: { $min: "$rankNumber" } // use cleaned numeric rankNumber here
+    }
+  },
+  {
+    $addFields: {
+      "doc.rank": "$minRank"
+    }
+  },
+  {
+    $replaceRoot: { newRoot: "$doc" }
+  },
+  {
+    $sort: { rank: order }
+  },
+  {
+    $skip: skip
+  },
+  {
+    $limit: limit
+  }
+]);
 
     // Count total unique names (for pagination)
     const totalUniqueNamesResult = await applications.aggregate([ // takes all the unique apps from the previous pipline and groups them
