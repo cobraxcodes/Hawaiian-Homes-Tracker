@@ -123,95 +123,33 @@ const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
         const page = parseInt(req.query.page) || 1
         const limit = parseInt(req.query.limit) || 20
         const skip = (page - 1) * limit 
-
-        // ascending / descending
-        const order = req.query.order === 'desc'? -1: 1; // takes a query called order and sets order to descending if -1 if explicitly declared or ascending by default 
-
-         const aggregated = await applications.aggregate([
-  {
-    $addFields: {
-      rankNumber: {
-        $toInt: {
-          $regexFind: {
-            input: "$rank",
-            regex: "[0-9]+"
-          }
-        }.match
-      }
+            const allApplications = await applications.find()
+            .skip(skip).limit(limit).select()
+            const total = await applications.countDocuments()
+            const responseData = {
+                page,
+                limit,
+                total,
+                totalPages: Math.ceil(total/limit),
+                applications: allApplications
+            }
+                   // send results
+               res.status(200).json(responseData)
+    // same catch (err)
+    }catch(err){
+        next(err)
     }
-  },
-  {
-    $group: {
-      _id: "$name",
-      doc: { $first: "$$ROOT" },
-      minRank: { $min: "$rankNumber" } // use cleaned numeric rankNumber here
-    }
-  },
-  {
-    $addFields: {
-      "doc.rank": "$minRank"
-    }
-  },
-  {
-    $replaceRoot: { newRoot: "$doc" }
-  },
-  {
-    $sort: { rank: order }
-  },
-  {
-    $skip: skip
-  },
-  {
-    $limit: limit
-  }
-]);
+    /// -- earlier version without caching ---
+    // try{
+    //     const allApplications = await applications.find() //using mongoose .find() too look up all docs in collection
+    //     res.status(200).json({
+    //         applications: allApplications
+    //     })
+    // }catch(err){
+    //     next(err)
+    // }
 
-    // Count total unique names (for pagination)
-    const totalUniqueNamesResult = await applications.aggregate([ // takes all the unique apps from the previous pipline and groups them
-      { $group: { _id: "$name" } },
-      { $count: "total" }
-    ]);
-    const total = totalUniqueNamesResult[0]?.total || 0;
-
-    res.status(200).json({
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-      applications: aggregated
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-//             const allApplications = await applications.find()
-//             .skip(skip).limit(limit).select()
-//             const total = await applications.countDocuments()
-//             const responseData = {
-//                 page,
-//                 limit,
-//                 total,
-//                 totalPages: Math.ceil(total/limit),
-//                 applications: allApplications
-//             }
-//                    // send results
-//                res.status(200).json(responseData)
-//     // same catch (err)
-//     }catch(err){
-//         next(err)
-//     }
-//     /// -- earlier version without caching ---
-//     // try{
-//     //     const allApplications = await applications.find() //using mongoose .find() too look up all docs in collection
-//     //     res.status(200).json({
-//     //         applications: allApplications
-//     //     })
-//     // }catch(err){
-//     //     next(err)
-//     // }
-
-// }
+}
 
 const getRanks = async(req,res,next) =>{ // GET ALL RANKS INCLUDING NAME 
     try{
