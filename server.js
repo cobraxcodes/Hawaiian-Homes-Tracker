@@ -63,14 +63,14 @@ app.delete('/applications/user', deleteUser) //delete route to delete user
 // READ ROUTES
 app.get('/applications', getAll) // get all route
 app.get('/applications/rank/:rank', getRank) // get all ranks route
-app.get('/applications/name/:fullname', getByFullName)
+app.get('/applications/name/:fullname', getByFullName) // get by full name
 app.get('/applications/lastname/:lastname', getLastName) // get by last name
 app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
 app.get('/applications/areacode/:areacode', getAreaCode) // get by areacode
 
 
 // CREATE ROUTE
-app.post('/applications/new', authenticate, createApp) // post route for creating an app - authenticate ok x`
+app.post('/applications/new', authenticate, createApp) // post route for creating an app - authenticate ok `
 //UPDATE ROUTE
 app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok
 // DELETE ROUTE
