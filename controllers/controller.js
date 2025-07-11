@@ -27,6 +27,7 @@ const signup = async (req,res,next) =>{
         })
        }
        const newUser = new users({username, password})
+       await newUser.validate()
        const saveUser = await newUser.save()
        const token = createToken({username})
        res.status(201).json({
