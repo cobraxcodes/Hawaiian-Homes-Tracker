@@ -57,7 +57,7 @@ const login = async(req,res,next) =>{
             return res.status(401).json({message: 'Invalid password!'})
         }
         // if password is valid, token is then given to user specifically tied to their username
-           const token = createToken({username: user.name })
+           const token = createToken({userId: user._id, username: username })
     // send a response
         res.status(200).json({
             message: "Successful login!", token
