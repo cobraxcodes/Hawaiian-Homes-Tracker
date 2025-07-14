@@ -56,7 +56,7 @@ const login = async(req,res,next) =>{
             return res.status(401).json({message: 'Invalid password!'})
         }
         // if password is valid, token is then given to user specifically tied to their username
-           const token = createToken({id: user._id, username: user.name })
+           const token = createToken({username: user.name })
     // send a response
         res.status(200).json({
             message: "Successful login!", token
@@ -89,9 +89,6 @@ const login = async(req,res,next) =>{
     }
  }
    
-
- 
-
 // DELETE A USER
  
     const deleteUser = async (req,res,next) =>{
@@ -231,33 +228,14 @@ const getAreaCode = async (req,res,next) =>{
     }
 }
 
-// QUERY APPLICATIONS MADE BY USER ONLY
-
-const getUserApp = async(req, res, next) =>{
-   try{
-    const findAppsByUser = await applications.find({userId: userId})
-    if(findAppsByUser.length === 0){
-        return res.status(404).send('Please submit an application to get started')
-    }
-    res.status(200).json({
-        applications: findAppsByUser
-    })
-    
-   }catch(err){
-    next(err)
-   }
- }
 
 
 
 // POST ROUTE
 const createApp = async(req,res,next) =>{
     try{
-      const newApp = new applications({
-        ...req.body,
-        userId: req.user.id
-    })
-        const saveApp = await newApp.save()
+      const newApp = new applications(req.body)
+        const saveApp = newApp.save()
         res.status(200).json({
             message: "Application succesfully created!",
             applications: newApp
@@ -307,4 +285,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens, getUserApp}
+export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens}

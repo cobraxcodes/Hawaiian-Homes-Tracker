@@ -60,7 +60,7 @@ app.delete('/applications/user', deleteUser) //delete route to delete user
 
 
 
-// READ ROUTES
+// QUERY ROUTES
 app.get('/applications', getAll) // get all route
 app.get('/applications/rank/:rank', getRank) // get all ranks route
 app.get('/applications/name/:fullname', getByFullName) // get by full name
