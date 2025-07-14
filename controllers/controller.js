@@ -1,3 +1,4 @@
+import userCreatedApplications from '../models/userCreatedApp.js'
 import applications from "../models/model.js";
 import users from '../models/userSchema.js'
 import {createToken} from '../utils/jwtUtils.js'
@@ -117,7 +118,15 @@ const login = async(req,res,next) =>{
     //send a response 200
     
 
-// ~~~~~~~~ ROUTES LOGIC ~~~~~~~~~~
+
+
+
+
+
+
+
+
+// ~~~~~~~~ ROUTES LOGIC : LEGACY~~~~~~~~~~
 const getAll = async(req,res,next) =>{ // GET ALL INFORMATION LOGIC
     try{
         // creating pagination to give prevent timeout due to big data set
@@ -229,39 +238,58 @@ const getAreaCode = async (req,res,next) =>{
 }
 
 
-// GET USER APPS 
-const getUserApps = async (req,res,next) =>{
-    try{
-        const userApps = await users.findById(req.user.userId).populate('applications')
-        if(!userApps){
-            return res.status(404).send('User Not Found')
-        }
-        res.status(200).json({
-            applications: userApps.applications
-        })
-
-    }catch(err){
-        next(err)
-    }
-}
 
 
-// CREATE ROUTE
-const createApp = async(req,res,next) =>{
-    try{
-      const newApp = new applications(req.body)
-        const saveApp = await newApp.save()
-        await users.findByIdAndUpdate(req.user.userId, {
-            $push: {applications: saveApp._id}
-        })
-        res.status(200).json({
-            message: "Application succesfully created!",
-            applications: saveApp
-        })
-    }catch(err){
-        next(err)
-    }
-}
+
+// ~~~~~~~ CRUD OPERATIONS ~~~~~~~~
+// CREATE ROUTE - new apps non legacy
+const createApp = async (req, res, next) => {
+  try {
+    const newApp = new applications(req.body);
+    const savedApp = await newApp.save();
+
+    // Save mapping
+    await userCreatedApplications.create({
+      userId: req.user.userId,
+      applicationId: savedApp._id,
+    });
+
+    res.status(200).json({
+      message: "Application successfully created!",
+      application: savedApp,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+// GET APPS BY USER = NON LEGACY
+const getUserApps = async (req, res, next) => {
+  try {
+    const userAppLinks = await userCreatedApplications.find({ userId: req.user.userId });
+    const appIds = userAppLinks.map(link => link.applicationId);
+
+    const userApps = await applications.find({ _id: { $in: appIds } });
+
+    res.status(200).json({ applications: userApps });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// const createApp = async(req,res,next) =>{
+//     try{
+//       const newApp = new applications(req.body)
+//         const saveApp = await newApp.save()
+//         res.status(200).json({
+//             message: "Application succesfully created!",
+//             applications: saveApp
+//         })
+//     }catch(err){
+//         next(err)
+//     }
+// }
 
 // UPDATE ROUTE
 const updateApp = async(req,res,next) =>{
