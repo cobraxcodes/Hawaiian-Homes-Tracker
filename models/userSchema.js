@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema({
             },
             message: props => `Invalid password ${props.value}`
         }
-    }
+    },
+    applications: [
+         {type: mongoose.Schema.Types.ObjectId, ref: 'Applications'}
+    ]
 })
 
 userSchema.pre('save', async function (next){

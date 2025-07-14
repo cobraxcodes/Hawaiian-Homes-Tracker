@@ -229,16 +229,34 @@ const getAreaCode = async (req,res,next) =>{
 }
 
 
+// GET USER APPS 
+const getUserApps = async (req,res,next) =>{
+    try{
+        const userApps = await users.findById(req.user.userId).populate('applications')
+        if(!userApps.length === 0){
+            return res.status(404).send("Please submit an application to get started")
+        }
+        res.status(200).json({
+            applications: userApps.applications
+        })
+
+    }catch(err){
+        next(err)
+    }
+}
 
 
-// POST ROUTE
+// CREATE ROUTE
 const createApp = async(req,res,next) =>{
     try{
       const newApp = new applications(req.body)
-        const saveApp = newApp.save()
+        const saveApp = await newApp.save()
+        await users.findByIdAndUpdate(req.user.userId, {
+            $push: {applications: saveApp._id}
+        })
         res.status(200).json({
             message: "Application succesfully created!",
-            applications: newApp
+            applications: saveApp
         })
     }catch(err){
         next(err)
@@ -285,4 +303,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens}
+export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens, getUserApps}
