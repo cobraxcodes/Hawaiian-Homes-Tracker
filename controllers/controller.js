@@ -233,6 +233,9 @@ const getAreaCode = async (req,res,next) =>{
 const getUserApps = async (req,res,next) =>{
     try{
         const userApps = await users.findById(req.user.userId).populate('applications')
+        if(!userApps){
+            return res.status(404).send('User Not Found')
+        }
         res.status(200).json({
             applications: userApps.applications
         })
