@@ -56,7 +56,7 @@ const login = async(req,res,next) =>{
         if(!authenticatePassword){
             return res.status(401).json({message: 'Invalid password!'})
         }
-        // if password is valid, token is then given to user specifically tied to their username
+        // if password is valid, token is then given with their username string insde the payload and userid 
            const token = createToken({userId: user._id, username: username })
     // send a response
         res.status(200).json({
@@ -249,14 +249,15 @@ const createApp = async (req, res, next) => {
     const savedApp = await newApp.save();
 
     // Save mapping
-    await userCreatedApplications.create({
-      userId: req.user.userId,
-      applicationId: savedApp._id,
+   const map = await userCreatedApplications.create({ // creates user created apps document in userCreatedApp box
+      userId: req.user.userId, // ties in the applicaiton and id and user id for consistent mapping , so that even if jwt token changes
+      applicationId: savedApp._id, // userid can be used for query to retrieve applicatiosn under it
     });
 
     res.status(200).json({
       message: "Application successfully created!",
       application: savedApp,
+      userCreatedAppId: map._id
     });
   } catch (err) {
     next(err);
@@ -267,10 +268,10 @@ const createApp = async (req, res, next) => {
 // GET APPS BY USER = NON LEGACY
 const getUserApps = async (req, res, next) => {
   try {
-    const userAppLinks = await userCreatedApplications.find({ userId: req.user.userId });
-    const appIds = userAppLinks.map(link => link.applicationId);
+    const userAppLinks = await userCreatedApplications.find({ userId: req.user.userId }); // finds applications in userCreatedApplications box tied into user id
+    const appIds = userAppLinks.map(link => link.applicationId); // gets the id of the applications
 
-    const userApps = await applications.find({ _id: { $in: appIds } });
+    const userApps = await applications.find({ _id: { $in: appIds } }); // finds the usercreated application in applications box from LEGACY BOX
 
     res.status(200).json({ applications: userApps });
   } catch (err) {
@@ -290,6 +291,40 @@ const getUserApps = async (req, res, next) => {
 //         next(err)
 //     }
 // }
+
+// NON LEGACY UPDATE CONTROLLER
+const updateUserApp = async (req,res,next) =>{
+    try{
+        const mapUserCreatedApps = await userCreatedApplications.findById(req.params.id)
+        if(!mapUserCreatedApps){
+            return res.status(404).send('No applications found in non legacy app container')
+        }
+        const legacyContainer = await applications.findById(mapUserCreatedApps.applicationId)
+        if(!legacyContainer){return res.status(404).send("No Applicatons found")}
+        legacyContainer.name = req.body.name ?? legacyContainer.name
+        legacyContainer.applicationDate = req.body.applicationDate ?? legacyContainer.applicationDate
+        legacyContainer.areaCode = req.body.areaCode ?? legacyContainer.areaCode
+        legacyContainer.rank = req.body.rank ?? legacyContainer.rank
+        legacyContainer.zipcode = req.body.zipcode ?? legacyContainer.zipcode
+
+        await legacyContainer.save()
+        res.status(200).json({
+            message: "Successfully updated application",
+            application: legacyContainer
+        })
+
+
+    }catch(err){
+        next(err)
+    }
+}
+
+
+
+
+
+
+
 
 // UPDATE ROUTE
 const updateApp = async(req,res,next) =>{
@@ -331,4 +366,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens, getUserApps}
+export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens, getUserApps, updateUserApp}
