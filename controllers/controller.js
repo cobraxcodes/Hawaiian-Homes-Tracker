@@ -242,7 +242,7 @@ const getAreaCode = async (req,res,next) =>{
 
 
 // ~~~~~~~ CRUD OPERATIONS ~~~~~~~~
-// CREATE ROUTE - new apps non legacy
+// CREATE ROUTE - new apps non legacy - AI assisted (was not sure how to go around not having userId in legacy data)
 const createApp = async (req, res, next) => {
   try {
     const newApp = new applications(req.body);
@@ -265,15 +265,27 @@ const createApp = async (req, res, next) => {
 };
 
 
-// GET APPS BY USER = NON LEGACY
+// GET USER APPS - NON LEGACY - AI assisted (was not sure how to link mapping from new data to legacy data)
 const getUserApps = async (req, res, next) => {
   try {
-    const userAppLinks = await userCreatedApplications.find({ userId: req.user.userId }); // finds applications in userCreatedApplications box tied into user id
-    const appIds = userAppLinks.map(link => link.applicationId); // gets the id of the applications
+    const userAppMapping = await userCreatedApplications.find({ userId: req.user.userId });
+    const appIds = userAppMapping.map(app => app.applicationId);
 
-    const userApps = await applications.find({ _id: { $in: appIds } }); // finds the usercreated application in applications box from LEGACY BOX
+    const userApplications = await applications.find({ _id: { $in: appIds } });
 
-    res.status(200).json({ applications: userApps });
+    const applicationsWithId = userApplications.map(app => {
+      // find the mapping object for this application
+      const mapping = userAppMapping.find(link => link.applicationId.toString() === app._id.toString());
+
+      return {
+        ...app.toObject(),
+        userCreatedApplicationId: mapping ? mapping._id : null
+      };
+    });
+
+    res.status(200).json({
+      applications: applicationsWithId
+    });
   } catch (err) {
     next(err);
   }
@@ -292,7 +304,7 @@ const getUserApps = async (req, res, next) => {
 //     }
 // }
 
-// NON LEGACY UPDATE CONTROLLER
+// NON LEGACY UPDATE CONTROLLER 
 const updateUserApp = async (req,res,next) =>{
     try{
         const mapUserCreatedApps = await userCreatedApplications.findById(req.params.id)
@@ -310,7 +322,8 @@ const updateUserApp = async (req,res,next) =>{
         await legacyContainer.save()
         res.status(200).json({
             message: "Successfully updated application",
-            application: legacyContainer
+            application: legacyContainer,
+            userCreatedAppId: mapUserCreatedApps._id
         })
 
 
@@ -319,6 +332,20 @@ const updateUserApp = async (req,res,next) =>{
     }
 }
 
+
+    // DELETE ROUTE - NON LEGACY APP
+    const deleteUserCreatedApp = async (req,res,next) =>{
+        try{
+        const map = await userCreatedApplications.findById(req.params.id)
+        const appDelete = await applications.findOneAndDelete({_id: map.applicationId})
+        if(!appDelete){return res.status(404).send("No Application Found!")}
+        res.status(200).json({
+            message: "Application Successfully Deleted!"
+        })
+        }catch(err){
+            next(err)
+        }
+    }
 
 
 
@@ -353,6 +380,7 @@ const updateApp = async(req,res,next) =>{
     // DELETE ROUTE
     const deleteApp = async (req,res,next) =>{
         try{
+
         const appDelete = await applications.findOneAndDelete({_id: req.params.id})
         if(!appDelete){return res.status(404).send("No Application Found!")}
         res.status(200).json({
@@ -366,4 +394,4 @@ const updateApp = async(req,res,next) =>{
 
 
  // EXPORTING LOGIC HERE
-export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens, getUserApps, updateUserApp}
+export {getAll, getAreaCode, getLastName, getRank, getZipCode, getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser, loggedOutTokens, getUserApps, updateUserApp, deleteUserCreatedApp}

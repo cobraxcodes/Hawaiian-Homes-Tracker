@@ -3,7 +3,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import {getAll, getAreaCode, getLastName, getRank, getZipCode, 
  getByFullName, createApp, updateApp, deleteApp,signup, login, logout, deleteUser,getUserApps,
- updateUserApp} from './controllers/controller.js'
+ updateUserApp,
+ deleteUserCreatedApp} from './controllers/controller.js'
 import express from 'express'
 import morgan from 'morgan'
 import logger from './utils/logger.js'
@@ -61,7 +62,7 @@ app.delete('/applications/user', deleteUser) //delete route to delete user
 
 
 
-// QUERY ROUTES - LEGEND DATA
+// QUERY ROUTES - lEGACY DATA
 app.get('/applications', getAll) // get all route
 app.get('/applications/rank/:rank', getRank) // get all ranks route
 app.get('/applications/name/:fullname', getByFullName) // get by full name
@@ -69,18 +70,17 @@ app.get('/applications/lastname/:lastname', getLastName) // get by last name
 app.get('/applications/zipcode/:zipcode', getZipCode) // get route for zipcodes
 app.get('/applications/areacode/:areacode', getAreaCode) // get by areacode
 
-
-// QUERY ROUTES - USER CREATED DATA
-app.get('/applications/user/posts', authenticate, getUserApps) // get user created applications
-app.patch('/applications/user/posts/:id', authenticate, updateUserApp) // update user created application
-
-
-// CREATE ROUTE
-app.post('/applications/new', authenticate, createApp) // post route for creating an app - authenticate ok `
 //UPDATE ROUTE
 app.patch('/applications/:id', authenticate, updateApp) // updates an application  - authenticate ok
 // DELETE ROUTE
 app.delete('/applications/:id', authenticate, deleteApp) // deletes an application - authenticate ok 
+
+
+// QUERY ROUTES - USER CREATED DATA
+app.post('/applications/new', authenticate, createApp) // post route for creating an app by user- authenticate ok 
+app.get('/applications/user/posts', authenticate, getUserApps) // get user created applications
+app.patch('/applications/user/posts/:id', authenticate, updateUserApp) // update user created application
+app.delete('/applications/user/posts/:id', authenticate, deleteUserCreatedApp) // update user created application
 
 
 // ~~~~~~ GLOBAL ERROR HANDLER ~~~~~~~
