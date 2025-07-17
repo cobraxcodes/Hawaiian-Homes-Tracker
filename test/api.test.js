@@ -3,7 +3,7 @@ import api from './testHelper.js'
 
 
 
-describe('GET/api/applications', () =>{
+describe('GET/legacy/applications', () =>{
     let res;
 
     it("should return all applications from the database", async function (){
@@ -26,5 +26,25 @@ describe('GET/api/applications', () =>{
         .expect(200)
         expect(res.body.applications).to.be.an('array')
         expect(res.body.applications.length).to.be.at.most(limit)
+    })
+})
+
+describe('GET/legacy/applications/rank', ()=>{
+    let res;
+
+    it("should return apps with matching rank", async() =>{
+        res = await api
+        .get('/applications/rank/8')
+        .expect('Content-type', /json/)
+        .expect(200)
+        expect(res.body.applications).to.be.an('array')
+    })
+
+    it("should return 404 for apps with no matching rank", async() =>{
+        res = await api
+        .get('/applications/rank/0')
+        .expect('Content-type', /text\/html/)
+        .expect(404)
+        
     })
 })
