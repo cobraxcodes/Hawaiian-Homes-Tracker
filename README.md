@@ -9,6 +9,10 @@ https://hawaiian-homes-tracker.onrender.com/applications
 ## Technologies Used
 Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
 
+## Testing
+Mocha, Chai, and Supertest are used for testing. Please refer to this file for the test codes.
+[Test files](./test/api.test.js)
+
 ## REST API - Flow Chart
 ![Flow Chart ](docs/Hawaiian-Homes%20REST%20API.drawio.png)
 ### USERS MODEL:

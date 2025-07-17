@@ -114,8 +114,7 @@ const login = async(req,res,next) =>{
             next(err)
         }
     }
-    //if no user return and send 401
-    //send a response 200
+
     
 
 
@@ -241,7 +240,62 @@ const getAreaCode = async (req,res,next) =>{
 
 
 
-// ~~~~~~~ CRUD OPERATIONS ~~~~~~~~
+
+
+// UPDATE ROUTE
+const updateApp = async(req,res,next) =>{
+    try{
+        // get the app that needs updating
+        const existingApp = await applications.findById(req.params.id)
+        if(!existingApp){return res.status(200).json({message: "No Application Found!"})}
+        const updateApp = await applications.findByIdAndUpdate({_id: req.params.id}, {
+            name: req.body.name ?? existingApp.name,
+            applicationDate: req.body.applicationDate ?? existingApp.applicationDate,
+            rank: req.body.rank ?? existingApp.rank,
+            zipcode: req.body.zipcode ?? existingApp.zipcode 
+
+
+        }, {new: true, runValidators: true})
+        res.status(200).json({
+            message: `${existingApp.name} successfully updated!`,
+            applications: updateApp
+        })
+    }catch(err){
+        next(err)
+    }
+}
+
+
+    // DELETE ROUTE
+    const deleteApp = async (req,res,next) =>{
+        try{
+
+        const appDelete = await applications.findOneAndDelete({_id: req.params.id})
+        if(!appDelete){return res.status(404).send("No Application Found!")}
+        res.status(200).json({
+            message: "Application Successfully Deleted!"
+        })
+        }catch(err){
+            next(err)
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+// ~~~~~~~ CRUD OPERATIONS : NON LEGACY~~~~~~~~
 // CREATE ROUTE - new apps non legacy - AI assisted (was not sure how to go around not having userId in legacy data)
 const createApp = async (req, res, next) => {
   try {
@@ -338,50 +392,6 @@ const updateUserApp = async (req,res,next) =>{
         try{
         const map = await userCreatedApplications.findById(req.params.id)
         const appDelete = await applications.findOneAndDelete({_id: map.applicationId})
-        if(!appDelete){return res.status(404).send("No Application Found!")}
-        res.status(200).json({
-            message: "Application Successfully Deleted!"
-        })
-        }catch(err){
-            next(err)
-        }
-    }
-
-
-
-
-
-
-
-// UPDATE ROUTE
-const updateApp = async(req,res,next) =>{
-    try{
-        // get the app that needs updating
-        const existingApp = await applications.findById(req.params.id)
-        if(!existingApp){return res.status(200).json({message: "No Application Found!"})}
-        const updateApp = await applications.findByIdAndUpdate({_id: req.params.id}, {
-            name: req.body.name ?? existingApp.name,
-            applicationDate: req.body.applicationDate ?? existingApp.applicationDate,
-            rank: req.body.rank ?? existingApp.rank,
-            zipcode: req.body.zipcode ?? existingApp.zipcode 
-
-
-        }, {new: true, runValidators: true})
-        res.status(200).json({
-            message: `${existingApp.name} successfully updated!`,
-            applications: updateApp
-        })
-    }catch(err){
-        next(err)
-    }
-}
-
-
-    // DELETE ROUTE
-    const deleteApp = async (req,res,next) =>{
-        try{
-
-        const appDelete = await applications.findOneAndDelete({_id: req.params.id})
         if(!appDelete){return res.status(404).send("No Application Found!")}
         res.status(200).json({
             message: "Application Successfully Deleted!"
