@@ -48,3 +48,22 @@ describe('GET/legacy/applications/rank', ()=>{
         
     })
 })
+
+describe("GET/legacy/applications/lastname", () =>{
+    let res;
+
+    it("should return apps with match last name route params", async() =>{
+    res = await api
+    .get('/applications/lastname/aina')
+    .expect('Content-type', /json/)
+    .expect(200)
+    expect(res.body.applications).to.be.an('array')
+    })
+
+    it("should return 404 when no matches are found ", async () =>{
+        res = await api
+        .get('/applications/lastname/rumchata')
+        .expect('Content-type', /text\/html/)
+        .expect(404)
+    })
+})
