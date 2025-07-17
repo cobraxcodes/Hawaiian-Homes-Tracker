@@ -86,3 +86,23 @@ describe("GET/legacy/applications/fullname", () =>{
         .expect(404)
     })
 })
+
+
+describe("GET/legacy/applications/zipcde", () =>{
+    let res;
+    it("should return apps that successfully matches with zipcode param", async() =>{
+        res = await api
+        .get('/applications/zipcode/96793')
+        .expect('Content-type', /json/)
+        .expect(200)
+        expect(res.body.applications).to.be.an("array")
+        
+    })
+    
+    it("should return 404 when no apps matched", async()=>{
+        res = await api
+        .get('/applications/zipcode/12345')
+        .expect('Content-type', /text\/html/)
+        .expect(404)
+    })
+})
