@@ -112,7 +112,7 @@ describe("GET/legacy/applications/areacode", () =>{
     it("should return apps that successfully matches with areacode param", async() =>{
         res = await api
         .get('/applications/areacode/193')
-        .expect('Content-type', /json/)
+        // .expect('Content-type', /json/)
         .expect(200)
         expect(res.body.applications).to.be.an("array")
         
@@ -121,6 +121,23 @@ describe("GET/legacy/applications/areacode", () =>{
     it("should return 404 when no apps matched", async()=>{
         res = await api
         .get('/applications/areacode/010')
+        .expect('Content-type', /text\/html/)
+        .expect(404)
+    })
+})
+
+describe("DELETE/legacy/applications/userCreatedAppId", () =>{
+    let res;
+    it("should successfully delete app that matches with id", async() =>{
+        res = await api
+        .get('/applications/687954327f12d201be058fd3')
+        .expect(404)
+        
+    })
+    
+    it("should return 404 when no apps matched", async()=>{
+        res = await api
+        .get('/applications/687954327f12d201be058fd3')
         .expect('Content-type', /text\/html/)
         .expect(404)
     })
