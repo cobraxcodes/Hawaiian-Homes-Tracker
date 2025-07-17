@@ -10,7 +10,7 @@ https://hawaiian-homes-tracker.onrender.com/applications
 Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
 
 ## Testing
-Mocha, Chai, and Supertest are used for testing. Please refer to this file for the test codes.
+Mocha, Chai, and Supertest are used for testing. Please refer to this file for the tests code.
 [Test files](./test/api.test.js)
 
 ## REST API - Flow Chart
