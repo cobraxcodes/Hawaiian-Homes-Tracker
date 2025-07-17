@@ -106,3 +106,22 @@ describe("GET/legacy/applications/zipcde", () =>{
         .expect(404)
     })
 })
+
+describe("GET/legacy/applications/areacode", () =>{
+    let res;
+    it("should return apps that successfully matches with areacode param", async() =>{
+        res = await api
+        .get('/applications/areacode/193')
+        .expect('Content-type', /json/)
+        .expect(200)
+        expect(res.body.applications).to.be.an("array")
+        
+    })
+    
+    it("should return 404 when no apps matched", async()=>{
+        res = await api
+        .get('/applications/areacode/010')
+        .expect('Content-type', /text\/html/)
+        .expect(404)
+    })
+})
