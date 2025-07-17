@@ -67,3 +67,22 @@ describe("GET/legacy/applications/lastname", () =>{
         .expect(404)
     })
 })
+
+describe("GET/legacy/applications/fullname", () =>{
+    let res;
+    it("should return apps that successfully matches with full name", async() =>{
+        res = await api
+        .get('/applications/name/aamold, adela')
+        .expect('Content-type', /json/)
+        .expect(200)
+        expect(res.body.applications).to.be.an("object")
+        
+    })
+    
+    it("should return 404 when no apps matched", async()=>{
+        res = await api
+        .get('/applications/name/test')
+        .expect('Content-type', /text\/html/)
+        .expect(404)
+    })
+})
