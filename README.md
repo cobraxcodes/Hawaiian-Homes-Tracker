@@ -7,10 +7,10 @@ This API serves as a free, open resource and backend foundation for future front
 https://hawaiian-homes-tracker.onrender.com/applications
 
 ## Technologies Used
-Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
+Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv, mocha, cypress, chai, supertest
 
 ## Testing
-Mocha, Chai, and Supertest are used for testing. Please refer to this file for the tests code.
+Mocha, Chai, and Supertest are used for testing. Please refer to this file for the tests code. This backend also includes rate-limiting, open cors, and helmet to prevent cross site scripting
 [Test files](./test/api.test.js)
 
 ## REST API - Flow Chart
@@ -67,8 +67,9 @@ Paginated with pages and limit option to improve site performance and user exper
 
 
 ## Future Roadmap
-- Frontend Application: Build a React-baesd frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
-- User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions build in this REST API.
-- Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
-- Integrate a notification system for status changes.
-- Community feedback and suggestion form via frontend.
+- [x] Frontend Application: Build a React-based frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
+- [x] User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions built in this REST API.
+- [x] Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
+- [ ] Integrate a notification system for status changes.
+- [x] Community feedback and suggestion form via frontend.
+
