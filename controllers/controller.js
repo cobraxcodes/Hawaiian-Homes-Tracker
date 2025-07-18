@@ -296,7 +296,7 @@ const updateApp = async(req,res,next) =>{
 
 
 // ~~~~~~~ CRUD OPERATIONS : NON LEGACY~~~~~~~~
-// CREATE ROUTE - new apps non legacy - AI assisted (was not sure how to go around not having userId in legacy data)
+// CREATE ROUTE - new apps non legacy 
 const createApp = async (req, res, next) => {
   try {
     const newApp = new applications(req.body);
@@ -334,7 +334,7 @@ const createApp = async (req, res, next) => {
 };
 
 
-// GET USER APPS - NON LEGACY - AI assisted (was not sure how to link mapping from new data to legacy data)
+// GET USER APPS - NON LEGACY - 
 const getUserApps = async (req, res, next) => {
   try {
     const userAppMapping = await userCreatedApplications.find({ userId: req.user.userId });
