@@ -255,24 +255,6 @@ import request from 'supertest'
 // })
 
 
-// describe('POST/applications/logout', () =>{
-//     let res;
-//     it("should test succesful logout with valid token", async() =>{
-//         const testUser = {
-//             username: "mochatest",
-//             password: "Admin123"
-//         }
-//     res = await api
-//     .post('/applications/logout')
-//     .send(testUser)
-//     .expect(200)
-//     .expect('Content-type', /json/)
-//     expect(res.text).to.include("Logout successful!")
-
-//     })
-// })
-
-
 describe('POST/application/createApp', () =>{
     let res; 
     let token;
