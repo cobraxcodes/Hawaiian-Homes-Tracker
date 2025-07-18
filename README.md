@@ -7,10 +7,10 @@ This API serves as a free, open resource and backend foundation for future front
 https://hawaiian-homes-tracker.onrender.com/applications
 
 ## Technologies Used
-Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv.
+Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, jsonwebtoken, bcrypt, cors, helmet, custom rate limiter, dotenv, mocha, cypress, chai, supertest
 
 ## Testing
-Mocha, Chai, and Supertest are used for testing. Please refer to this file for the tests code.
+Mocha, Chai, and Supertest are used for testing. Please refer to this file for the tests code. This backend also includes rate-limiting, open cors, and helmet to prevent cross site scripting
 [Test files](./test/api.test.js)
 
 ## REST API - Flow Chart
