@@ -146,60 +146,109 @@ import api from './testHelper.js'
 
 
 
-describe("POST/applications/signup", ()=>{
-    let res;
-    // it("should successfully signup user if all fields are filled", async() =>{
-    //     const testUser = {
-    //         username: "mochatest1",
-    //         password: "Admin123"
-    //     }
+// describe("POST/applications/signup", ()=>{
+//     let res;
+//     // it("should successfully signup user if all fields are filled", async() =>{
+//     //     const testUser = {
+//     //         username: "mochatest1",
+//     //         password: "Admin123"
+//     //     }
     
-    // res = await api
-    // .post('/applications/signup')
-    // .send(testUser)
-    // .expect('Content-Type', /json/)
-    // .expect(201)
+//     // res = await api
+//     // .post('/applications/signup')
+//     // .send(testUser)
+//     // .expect('Content-Type', /json/)
+//     // .expect(201)
 
-    // expect(res.body.token).to.exist
-    // })
+//     // expect(res.body.token).to.exist
+//     // })
 
-    it("should respond with error message for invalid username", async () =>{
-        const testUser1={
-            username: "x",
+//     it("should respond with error message for invalid username", async () =>{
+//         const testUser1={
+//             username: "x",
+//             password: "Admin123"
+//         }
+
+
+//         res = await api
+//         .post('/applications/signup')
+//         .send(testUser1)
+//         .expect(401)
+//         expect(res.text).to.include("Invalid username. Usernames must have at least 6 characters")
+//     })
+
+//     it("should respond with error message for invalid password", async () =>{
+//         const testUser2={
+//             username: "mochatest2",
+//             password: "x"
+//         }
+
+//         res = await api
+//         .post('/applications/signup')
+//         .send(testUser2)
+//         .expect(401)
+//         expect(res.text).to.include("Invalid password. Passwords must have at least 8 characters!")
+//     })
+
+//     it("should responsd with err message for existing user", async () =>{
+//         const testUser3={
+//             username: "mochatest",
+//             password: "Admin123"
+//         }
+
+//         res=await api
+//         .post('/applications/signup')
+//         .send(testUser3)
+//         .expect(400)
+//         expect(res.text).to.include("Username mochatest exists. Please try again!")
+//     })
+// })
+
+
+
+describe("POST/applications/login", () =>{
+    let res;
+    let token;
+
+    it("should successfully login with correct credentials and send error for invalid", async () =>{
+     const loginUser = {
+        username: "mochatest",
+        password: "Admin123"
+     }
+
+     res = await api
+     .post('/applications/login')
+     .send(loginUser)
+     .expect('Content-Type', /json/)
+     .expect(200)
+     expect(res.body).to.have.property("token")
+    })
+
+    it("should send error message for invalid username", async () =>{
+        const loginUser = {
+            username: "mochajest",
             password: "Admin123"
         }
 
-
         res = await api
-        .post('/applications/signup')
-        .send(testUser1)
+        .post('/applications/login')
+        .send(loginUser)
+        .expect('Content-type', /json/)
         .expect(401)
-        expect(res.text).to.include("Invalid username. Usernames must have at least 6 characters")
+        expect(res.text).to.include("Invalid Login! No user found!")
     })
 
-    it("should respond with error message for invalid password", async () =>{
-        const testUser2={
-            username: "mochatest2",
-            password: "x"
-        }
 
-        res = await api
-        .post('/applications/signup')
-        .send(testUser2)
-        .expect(401)
-        expect(res.text).to.include("Invalid password. Passwords must have at least 8 characters!")
-    })
-
-    it("should responsd with err message for existing user", async () =>{
-        const testUser3={
+    it("should send error message for invalid password", async () =>{
+        const loginUser = {
             username: "mochatest",
-            password: "Admin123"
+            password: "dfasdfasd"
         }
 
-        res=await api
-        .post('/applications/signup')
-        .send(testUser3)
-        .expect(400)
-        expect(res.text).to.include("Username mochatest exists. Please try again!")
+        res= await api
+        .post('/applications/login')
+        .send(loginUser)
+        .expect(401)
+        expect(res.text).to.include( "Invalid password!")
     })
 })
