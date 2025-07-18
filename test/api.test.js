@@ -3,7 +3,6 @@ import api from './testHelper.js'
 import request from 'supertest'
 
 
-
 // describe('GET/legacy/applications', () =>{
 //     let res;
 
