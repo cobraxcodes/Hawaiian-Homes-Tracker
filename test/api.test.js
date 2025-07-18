@@ -1,6 +1,6 @@
 import {expect}  from 'chai'
 import api from './testHelper.js'
-
+import request from 'supertest'
 
 
 // describe('GET/legacy/applications', () =>{
@@ -254,19 +254,53 @@ import api from './testHelper.js'
 // })
 
 
-describe('POST/applications/logout', () =>{
-    let res;
-    it("should test succesful logout with valid token", async() =>{
-        const testUser = {
+describe('POST/application/createApp', () =>{
+    let res; 
+    let token;
+    it("should login user with correct credentials", async() =>{
+        const user={
             username: "mochatest",
             password: "Admin123"
         }
-    res = await api
-    .post('/applications/logout')
-    .send(testUser)
-    .expect(200)
-    .expect('Content-type', /json/)
-    expect(res.text).to.include("Logout successful!")
 
+    res = await api
+    .post('/applications/login')
+    .send(user)
+    .expect(200)
+    expect(res.body).to.have.property("token")
+    token = res.body.token
+    })
+
+    it("should allow users to create app after log in", async() =>{
+        let newApp = {
+           "name": "mocha,testing",
+           "applicationDate": "2025-06-09",
+           "areaCode": 101,
+           "rank": 44,
+           "zipcode": "0000"
+        }
+    res = await api
+    .post('/applications/new')
+    .set('Authorization', `Bearer ${token}`)
+    .send(newApp)
+    .expect(200)
+    .expect('Content-Type', /json/)
+    expect(res.body.message).to.include("Application successfully created!")
+    })
+
+    it("should display error message to users if input is empty", async() =>{
+          let newApp = {
+           "name": "mocha,testing",
+           "applicationDate": "2025-06-09",
+           "areaCode": 101,
+           "rank": 44,
+           "zipcode": ""
+        }
+        let res = await request ('http://localhost:10000')
+        .post('/applications/new')
+        .set('Authorization', `Bearer ${token}`)
+        .send(newApp)
+        .expect(400)
+       expect(res.body.message).to.equal("Please fill out all required fields!");
     })
 })

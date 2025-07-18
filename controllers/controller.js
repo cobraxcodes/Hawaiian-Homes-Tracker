@@ -300,6 +300,21 @@ const updateApp = async(req,res,next) =>{
 const createApp = async (req, res, next) => {
   try {
     const newApp = new applications(req.body);
+    if(req.body.name.length === 0){
+        return res.status(400).json({message:"Please fill out all required fields!" })
+    }
+    if(req.body.applicationDate.length === 0){
+          return res.status(400).json({message:"Please fill out all required fields!" })
+    }
+    if(req.body.areaCode.length === 0){
+          return res.status(400).json({message:"Please fill out all required fields!" })
+    }
+    if(req.body.rank.length === 0){
+          return res.status(400).json({message:"Please fill out all required fields!" })
+    }
+    if(req.body.zipcode.length === 0){
+          return res.status(400).json({message:"Please fill out all required fields!" })
+    }
     const savedApp = await newApp.save();
 
     // Save mapping
