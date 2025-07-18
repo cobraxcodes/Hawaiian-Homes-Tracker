@@ -13,6 +13,10 @@ Node.js, Mongoose, MongoDB Atlas, Express, nodemon, morgan, winston, postman, js
 Mocha, Chai, and Supertest are used for testing. Please refer to this file for the tests code. This backend also includes rate-limiting, open cors, and helmet to prevent cross site scripting
 [Test files](./test/api.test.js)
 
+## API Documentation
+The full API documentation for the Hawaiian Homes Tracker backend is available via Swagger UI at:
+(https://hawaiian-homes-tracker.onrender.com/api-docs/#/)
+
 ## REST API - Flow Chart
 ![Flow Chart ](docs/Hawaiian-Homes%20REST%20API.drawio.png)
 ### USERS MODEL:
