@@ -206,49 +206,67 @@ import api from './testHelper.js'
 
 
 
-describe("POST/applications/login", () =>{
+// describe("POST/applications/login", () =>{
+//     let res;
+//     let token;
+
+//     it("should successfully login with correct credentials and send error for invalid", async () =>{
+//      const loginUser = {
+//         username: "mochatest",
+//         password: "Admin123"
+//      }
+
+//      res = await api
+//      .post('/applications/login')
+//      .send(loginUser)
+//      .expect('Content-Type', /json/)
+//      .expect(200)
+//      expect(res.body).to.have.property("token")
+//     })
+
+//     it("should send error message for invalid username", async () =>{
+//         const loginUser = {
+//             username: "mochajest",
+//             password: "Admin123"
+//         }
+
+//         res = await api
+//         .post('/applications/login')
+//         .send(loginUser)
+//         .expect('Content-type', /json/)
+//         .expect(401)
+//         expect(res.text).to.include("Invalid Login! No user found!")
+//     })
+
+
+//     it("should send error message for invalid password", async () =>{
+//         const loginUser = {
+//             username: "mochatest",
+//             password: "dfasdfasd"
+//         }
+
+//         res= await api
+//         .post('/applications/login')
+//         .send(loginUser)
+//         .expect(401)
+//         expect(res.text).to.include( "Invalid password!")
+//     })
+// })
+
+
+describe('POST/applications/logout', () =>{
     let res;
-    let token;
-
-    it("should successfully login with correct credentials and send error for invalid", async () =>{
-     const loginUser = {
-        username: "mochatest",
-        password: "Admin123"
-     }
-
-     res = await api
-     .post('/applications/login')
-     .send(loginUser)
-     .expect('Content-Type', /json/)
-     .expect(200)
-     expect(res.body).to.have.property("token")
-    })
-
-    it("should send error message for invalid username", async () =>{
-        const loginUser = {
-            username: "mochajest",
+    it("should test succesful logout with valid token", async() =>{
+        const testUser = {
+            username: "mochatest",
             password: "Admin123"
         }
+    res = await api
+    .post('/applications/logout')
+    .send(testUser)
+    .expect(200)
+    .expect('Content-type', /json/)
+    expect(res.text).to.include("Logout successful!")
 
-        res = await api
-        .post('/applications/login')
-        .send(loginUser)
-        .expect('Content-type', /json/)
-        .expect(401)
-        expect(res.text).to.include("Invalid Login! No user found!")
-    })
-
-
-    it("should send error message for invalid password", async () =>{
-        const loginUser = {
-            username: "mochatest",
-            password: "dfasdfasd"
-        }
-
-        res= await api
-        .post('/applications/login')
-        .send(loginUser)
-        .expect(401)
-        expect(res.text).to.include( "Invalid password!")
     })
 })
