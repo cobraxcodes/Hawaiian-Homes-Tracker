@@ -67,8 +67,9 @@ Paginated with pages and limit option to improve site performance and user exper
 
 
 ## Future Roadmap
--[x] Frontend Application: Build a React-based frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
--[x] User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions build in this REST API.
--[x] Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
--[ ] Integrate a notification system for status changes.
--[x] Community feedback and suggestion form via frontend.
+- [x] Frontend Application: Build a React-based frontend interface to display, search, and filter Hawaiian Homes waitlist data in a clean, user-friendly design.
+- [x] User Authentication and Admin Tools Interface: Implement frontend interface to connect with jwt functions built in this REST API.
+- [x] Mobile-Friendly Interface: Ensure the frontend is responsive and accessible for mobile devices.
+- [ ] Integrate a notification system for status changes.
+- [x] Community feedback and suggestion form via frontend.
+
