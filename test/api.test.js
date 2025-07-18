@@ -1,5 +1,6 @@
 import {expect}  from 'chai'
 import api from './testHelper.js'
+import request from 'supertest'
 
 
 
@@ -304,5 +305,21 @@ describe('POST/application/createApp', () =>{
     .expect(200)
     .expect('Content-Type', /json/)
     expect(res.body.message).to.include("Application successfully created!")
+    })
+
+    it("should display error message to users if input is empty", async() =>{
+          let newApp = {
+           "name": "mocha,testing",
+           "applicationDate": "2025-06-09",
+           "areaCode": 101,
+           "rank": 44,
+           "zipcode": ""
+        }
+        let res = await request ('http://localhost:10000')
+        .post('/applications/new')
+        .set('Authorization', `Bearer ${token}`)
+        .send(newApp)
+        .expect(400)
+       expect(res.body.message).to.equal("Please fill out all required fields!");
     })
 })
